@@ -1,0 +1,83 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+issueTrackerURL = "https://github.com/teamauroramods/BayouBlues/issues"
+license = "${mod_license}"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+authors = "${mod_authors}"
+description = '''原作者：Team Aurora'''
+displayURL = "https://discord.gg/VzXSCFp"
+logoFile = "logo.png"
+
+[[dependencies.${mod_id}]]
+modId = "forge"
+mandatory = true
+versionRange = "${forge_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+# Required dependencies
+[[dependencies.${mod_id}]]
+modId = "terrablender"
+mandatory = true
+versionRange = "[3.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+# Required dependencies
+[[dependencies.${mod_id}]]
+modId = "quark"
+mandatory = true
+versionRange = "[4.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+# Required dependencies
+[[dependencies.${mod_id}]]
+modId = "farmersdelight"
+mandatory = true
+versionRange = "[1.2,)"
+ordering = "AFTER"
+side = "BOTH"
+
+# Optional dependencies
+[[dependencies.${mod_id}]]
+modId = "buzzier_bees"
+mandatory = false
+versionRange = "[6.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "environmental"
+mandatory = false
+versionRange = "[4.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+# ── 关于 Blueprint（Team Abnormals 前置库）─────────────────────────────────────────────────
+# 历史上 Better Badlands 1.16.5 强依赖 abnormals_core；该库在 1.18+ 更名为 Blueprint。
+# 本次移植【没有】把它作为依赖引入：AbnormalsCore 提供的那几个类在本模组里都有等价实现——
+#   AbnormalsCore ThatchBlock / ThatchSlabBlock / ThatchStairsBlock
+#       → 本模组 com.teamaurora.bayou_blues.common.block.BBBlocks.Thatch*
+#   AbnormalsCore ThatchVerticalSlabBlock（Blueprint 1.20.x 已删除该类）
+#       → 本模组 com.teamaurora.bayou_blues.common.block.thatch.ThatchVerticalSlabBlock
+#   AbnormalsCore TreeUtil（Blueprint 1.20.x 已删除该类）
+#       → 本模组 com.teamaurora.bayou_blues.common.util.TreeUtil
+# 因此本模组既不声明 blueprint 依赖，也不引用 blueprint 的任何一个类。
+# 环境里同时装有 Blueprint 时：Blueprint 是独立 modId（blueprint）、独立命名空间、
+# 独立 mixin 配置（blueprint.mixins.json，34 个 mixin，与本模组空 mixin 列表无交集），
+# 两者互不干扰。已实测：同时加载 Blueprint 1.20.1-7.1.3 可正常进入世界。
+
+
+

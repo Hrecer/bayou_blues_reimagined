@@ -1,0 +1,19 @@
+{
+  "conditions": [
+    {
+      "type": "environmental:event",
+      "events": [
+        "spawn",
+        "breed"
+      ]
+    },
+    {
+      "type": "environmental:in_biome",
+      "biomes": "bayou_blues:bayou"
+    }
+  ],
+  "description": {
+    "translate": "entity.bayou_blues.slabfish.type.bayou"
+  },
+  "texture": "bayou_blues:type/bayou"
+}

@@ -1,0 +1,23 @@
+{
+  "type": "farmersdelight:cooking",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "recipe_book_tab": "meals",
+  "ingredients": [
+    {
+      "item": "bayou_blues:cypress_branch"
+    },
+    {
+      "item": "bayou_blues:cypress_branch"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "container": {
+    "item": "minecraft:bowl"
+  },
+  "result": {
+    "item": "bayou_blues:cypress_soup"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    {
+      "id": "bayou_blues:cypress_beehive",
+      "required": false
+    }
+  ]
+}

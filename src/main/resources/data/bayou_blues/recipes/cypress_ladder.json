@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S S",
+    "SPS",
+    "S S"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "P": {
+      "item": "bayou_blues:cypress_planks"
+    }
+  },
+  "result": {
+    "item": "bayou_blues:cypress_ladder",
+    "count": 4
+  }
+}

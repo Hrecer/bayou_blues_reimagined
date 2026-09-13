@@ -1,0 +1,23 @@
+{
+  "type": "farmersdelight:cooking",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "recipe_book_tab": "drinks",
+  "ingredients": [
+    {
+      "item": "bayou_blues:blue_lily"
+    },
+    {
+      "item": "bayou_blues:gooseberries"
+    },
+    {
+      "item": "minecraft:sugar"
+    }
+  ],
+  "container": {
+    "item": "minecraft:glass_bottle"
+  },
+  "result": {
+    "item": "bayou_blues:bayou_flower_tea"
+  }
+}

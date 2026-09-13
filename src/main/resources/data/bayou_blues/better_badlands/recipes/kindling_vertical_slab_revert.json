@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "bayou_blues:kindling_vertical_slab"
+    }
+  },
+  "result": {
+    "item": "bayou_blues:kindling_slab",
+    "count": 1
+  }
+}

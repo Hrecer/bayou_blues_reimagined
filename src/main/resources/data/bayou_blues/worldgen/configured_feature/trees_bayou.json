@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "features": [
+      {
+        "chance": 0.35,
+        "feature": "bayou_blues:cypress_bush"
+      },
+      {
+        "chance": 0.33333334,
+        "feature": "bayou_blues:mega_cypress_knees"
+      }
+    ],
+    "default": "bayou_blues:cypress_tree"
+  }
+}

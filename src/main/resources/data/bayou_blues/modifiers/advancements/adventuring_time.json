@@ -1,0 +1,26 @@
+{
+  "selector": "minecraft:adventure/adventuring_time",
+  "modifiers": [
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "bayou_blues:bayou": {
+            "trigger": "minecraft:location",
+            "conditions": {
+              "location": {
+                "biome": "bayou_blues:bayou"
+              }
+            }
+          }
+        },
+        "requirements": [
+          [
+            "bayou_blues:bayou"
+          ]
+        ],
+        "should_replace_requirements": false
+      }
+    }
+  ]
+}

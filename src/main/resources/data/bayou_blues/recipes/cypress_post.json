@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "F",
+    "F",
+    "F"
+  ],
+  "key": {
+    "F": {
+      "item": "bayou_blues:cypress_wood"
+    }
+  },
+  "result": {
+    "item": "bayou_blues:cypress_post",
+    "count": 8
+  }
+}

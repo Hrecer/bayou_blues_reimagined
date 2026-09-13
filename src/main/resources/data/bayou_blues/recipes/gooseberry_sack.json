@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "bayou_blues:gooseberries"
+    }
+  },
+  "result": {
+    "item": "bayou_blues:gooseberry_sack",
+    "count": 1
+  }
+}

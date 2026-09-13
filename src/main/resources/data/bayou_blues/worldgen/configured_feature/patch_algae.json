@@ -1,0 +1,8 @@
+{
+  "type": "bayou_blues:large_patch",
+  "config": {
+    "state": {
+      "Name": "bayou_blues:algae"
+    }
+  }
+}

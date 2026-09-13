@@ -1,0 +1,6 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "bayou_blues:block/beard_moss_block"
+  }
+}

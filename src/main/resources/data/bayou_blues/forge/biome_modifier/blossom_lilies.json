@@ -1,0 +1,19 @@
+{
+  "type": "bayou_blues:conditional",
+  "condition": {
+    "type": "forge:mod_loaded",
+    "modid": "environmental"
+  },
+  "modifier": {
+    "type": "forge:add_features",
+    "biomes": [
+      "environmental:blossom_woods",
+      "environmental:blossom_valleys"
+    ],
+    "features": [
+      "bayou_blues:patch_lily_neutral",
+      "bayou_blues:patch_lily_warm"
+    ],
+    "step": "vegetal_decoration"
+  }
+}

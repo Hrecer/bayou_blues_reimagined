@@ -1,0 +1,8 @@
+{
+    "parent": "block/inner_stairs",
+    "textures": {
+        "bottom": "bayou_blues:block/kindling",
+        "top": "bayou_blues:block/kindling",
+        "side": "bayou_blues:block/kindling"
+    }
+}

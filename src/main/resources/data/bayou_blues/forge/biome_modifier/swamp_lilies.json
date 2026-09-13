@@ -1,0 +1,18 @@
+{
+  "type": "bayou_blues:conditional",
+  "condition": {
+    "type": "bayou_blues:config",
+    "path": "lily_flower_spawns"
+  },
+  "modifier": {
+    "type": "forge:add_features",
+    "biomes": [
+      "minecraft:swamp"
+    ],
+    "features": [
+      "bayou_blues:patch_lily_neutral",
+      "bayou_blues:patch_lily_warm"
+    ],
+    "step": "vegetal_decoration"
+  }
+}

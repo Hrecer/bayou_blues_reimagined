@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "bayou_blues:gooseberries"
+  },
+  "result": "bayou_blues:cooked_gooseberries",
+  "experience": 0.35,
+  "cookingtime": 200
+}

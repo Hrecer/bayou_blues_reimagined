@@ -1,0 +1,26 @@
+{
+  "type": "farmersdelight:cooking",
+  "cookingtime": 200,
+  "experience": 0.35,
+  "recipe_book_tab": "meals",
+  "ingredients": [
+    {
+      "item": "bayou_blues:algae"
+    },
+    {
+      "tag": "forge:salad_ingredients"
+    },
+    {
+      "item": "bayou_blues:algae"
+    },
+    {
+      "tag": "forge:milk"
+    }
+  ],
+  "container": {
+    "item": "minecraft:bowl"
+  },
+  "result": {
+    "item": "bayou_blues:algae_soup"
+  }
+}

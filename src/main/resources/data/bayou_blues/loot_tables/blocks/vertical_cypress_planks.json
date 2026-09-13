@@ -1,0 +1,1 @@
+{"type": "minecraft:block", "pools": [{"rolls": 1, "entries": [{"type": "minecraft:item", "name": "bayou_blues:vertical_cypress_planks"}], "conditions": [{"condition": "minecraft:survives_explosion"}]}]}

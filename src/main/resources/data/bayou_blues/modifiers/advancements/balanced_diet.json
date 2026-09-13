@@ -1,0 +1,81 @@
+{
+  "selector": "minecraft:husbandry/balanced_diet",
+  "modifiers": [
+    {
+      "type": "criteria",
+      "config": {
+        "criteria": {
+          "bayou_blues:gooseberries": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+              "item": {
+                "item": "bayou_blues:gooseberries"
+              }
+            }
+          },
+          "bayou_blues:gooseberry_juice": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+              "item": {
+                "item": "bayou_blues:gooseberry_juice"
+              }
+            }
+          },
+          "bayou_blues:gooseberry_pie": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+              "item": {
+                "item": "bayou_blues:gooseberry_pie"
+              }
+            }
+          },
+          "bayou_blues:honey_glazed_gooseberries": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+              "item": {
+                "item": "bayou_blues:honey_glazed_gooseberries"
+              }
+            }
+          },
+          "bayou_blues:gooseberry_jam": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+              "item": {
+                "item": "bayou_blues:gooseberry_jam"
+              }
+            }
+          },
+          "bayou_blues:gooseberry_jam_cookie": {
+            "trigger": "minecraft:consume_item",
+            "conditions": {
+              "item": {
+                "item": "bayou_blues:gooseberry_jam_cookie"
+              }
+            }
+          }
+        },
+        "requirements": [
+          [
+            "bayou_blues:gooseberries"
+          ],
+          [
+            "bayou_blues:gooseberry_juice"
+          ],
+          [
+            "bayou_blues:gooseberry_pie"
+          ],
+          [
+            "bayou_blues:honey_glazed_gooseberries"
+          ],
+          [
+            "bayou_blues:gooseberry_jam"
+          ],
+          [
+            "bayou_blues:gooseberry_jam_cookie"
+          ]
+        ],
+        "should_replace_requirements": false
+      }
+    }
+  ]
+}

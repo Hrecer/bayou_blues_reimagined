@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "bayou_pie",
+  "pattern": [
+    "###",
+    "aaa",
+    "xOx"
+  ],
+  "key": {
+    "#": {
+      "tag": "forge:crops/wheat"
+    },
+    "a": {
+      "item": "bayou_blues:algae"
+    },
+    "x": {
+      "item": "minecraft:sugar"
+    },
+    "O": {
+      "item": "farmersdelight:pie_crust"
+    }
+  },
+  "result": {
+    "item": "bayou_blues:bayou_pie"
+  }
+}

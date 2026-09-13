@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "bayou_blues:vertical_cypress_planks"
+    }
+  ],
+  "result": {
+    "item": "bayou_blues:cypress_planks"
+  }
+}

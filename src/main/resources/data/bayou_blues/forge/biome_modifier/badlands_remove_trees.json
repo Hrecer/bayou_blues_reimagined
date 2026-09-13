@@ -1,0 +1,19 @@
+{
+  "type": "bayou_blues:conditional",
+  "condition": {
+    "type": "bayou_blues:config",
+    "path": "small_dark_oaks_spawn"
+  },
+  "modifier": {
+    "type": "forge:remove_features",
+    "biomes": [
+      "minecraft:wooded_badlands"
+    ],
+    "features": [
+      "minecraft:trees_badlands"
+    ],
+    "steps": [
+      "vegetal_decoration"
+    ]
+  }
+}

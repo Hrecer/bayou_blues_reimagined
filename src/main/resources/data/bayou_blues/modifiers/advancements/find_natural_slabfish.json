@@ -1,0 +1,50 @@
+{
+  "selector": {
+    "type": "names",
+    "config": [
+      "environmental:husbandry/tame_all_slabfish"
+    ],
+    "conditions": [
+      {
+        "type": "forge:mod_loaded",
+        "modid": "environmental"
+      }
+    ]
+  },
+  "modifiers": [
+    {
+      "type": "criteria",
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "environmental"
+        }
+      ],
+      "config": {
+        "criteria": {
+          "bayou_blues:bayou": {
+            "trigger": "minecraft:tame_animal",
+            "conditions": {
+              "entity": [
+                {
+                  "condition": "minecraft:entity_properties",
+                  "entity": "this",
+                  "predicate": {
+                    "type": "environmental:slabfish",
+                    "nbt": "{SlabfishType:\"bayou_blues:bayou\"}"
+                  }
+                }
+              ]
+            }
+          }
+        },
+        "requirements": [
+          [
+            "bayou_blues:bayou"
+          ]
+        ],
+        "should_replace_requirements": false
+      }
+    }
+  ]
+}

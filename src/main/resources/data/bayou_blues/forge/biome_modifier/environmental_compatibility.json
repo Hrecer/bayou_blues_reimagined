@@ -1,0 +1,18 @@
+{
+  "type": "bayou_blues:conditional",
+  "condition": {
+    "type": "forge:mod_loaded",
+    "modid": "environmental"
+  },
+  "modifier": {
+    "type": "forge:add_features",
+    "biomes": [
+      "bayou_blues:bayou"
+    ],
+    "features": [
+      "environmental:cattails",
+      "environmental:patch_giant_tall_grass_marsh"
+    ],
+    "step": "vegetal_decoration"
+  }
+}

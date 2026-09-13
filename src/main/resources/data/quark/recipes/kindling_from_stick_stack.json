@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": [
+      {
+        "item": "quark:stick_block"
+      }
+    ]
+  },
+  "result": {
+    "item": "bayou_blues:kindling"
+  }
+}

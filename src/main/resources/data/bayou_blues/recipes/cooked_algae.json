@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "bayou_blues:algae"
+  },
+  "result": "bayou_blues:cooked_algae",
+  "experience": 0.35,
+  "cookingtime": 200
+}

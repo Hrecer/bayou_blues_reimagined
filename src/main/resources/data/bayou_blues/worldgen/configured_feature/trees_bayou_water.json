@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "features": [
+      {
+        "chance": 0.33333334,
+        "feature": "bayou_blues:water_mega_cypress"
+      }
+    ],
+    "default": "bayou_blues:water_cypress_tree"
+  }
+}

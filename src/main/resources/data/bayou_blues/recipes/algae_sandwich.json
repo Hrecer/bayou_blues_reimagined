@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "forge:bread"
+    },
+    {
+      "item": "bayou_blues:algae"
+    },
+    {
+      "tag": "forge:salad_ingredients"
+    },
+    {
+      "item": "bayou_blues:algae"
+    }
+  ],
+  "result": {
+    "item": "bayou_blues:algae_sandwich"
+  }
+}

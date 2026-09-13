@@ -1,0 +1,1 @@
+{"type": "minecraft:crafting_shaped", "pattern": ["PPP", "HHH", "PPP"], "key": {"P": {"item": "bayou_blues:cypress_planks"}, "H": {"item": "minecraft:honeycomb"}}, "result": {"item": "bayou_blues:cypress_beehive"}, "conditions": [{"type": "forge:mod_loaded", "modid": "buzzier_bees"}]}

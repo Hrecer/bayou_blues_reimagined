@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "L",
+    "W"
+  ],
+  "key": {
+    "L": {
+      "item": "bayou_blues:cypress_leaves"
+    },
+    "W": {
+      "tag": "bayou_blues:cypress_logs"
+    }
+  },
+  "result": {
+    "item": "bayou_blues:cypress_hedge",
+    "count": 2
+  }
+}

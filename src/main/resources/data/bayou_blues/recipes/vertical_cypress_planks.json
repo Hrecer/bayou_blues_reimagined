@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#",
+    "#",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "bayou_blues:cypress_planks"
+    }
+  },
+  "result": {
+    "item": "bayou_blues:vertical_cypress_planks",
+    "count": 3
+  }
+}

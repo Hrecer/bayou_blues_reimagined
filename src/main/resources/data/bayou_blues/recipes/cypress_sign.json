@@ -1,0 +1,1 @@
+{"type": "minecraft:crafting_shaped", "pattern": ["###", "###", " x "], "key": {"#": {"item": "bayou_blues:cypress_planks"}, "x": {"tag": "forge:rods/wooden"}}, "result": {"item": "bayou_blues:cypress_sign", "count": 3}}

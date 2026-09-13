@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "bayou_blues:item/lily_lily_pad_soup"
+  }
+}

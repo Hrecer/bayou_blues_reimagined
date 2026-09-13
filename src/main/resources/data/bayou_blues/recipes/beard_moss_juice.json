@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "bayou_blues:beard_moss"
+    },
+    {
+      "item": "bayou_blues:beard_moss"
+    },
+    {
+      "item": "minecraft:sugar"
+    },
+    {
+      "item": "bayou_blues:beard_moss"
+    },
+    {
+      "item": "bayou_blues:beard_moss"
+    },
+    {
+      "item": "minecraft:glass_bottle"
+    }
+  ],
+  "result": {
+    "item": "bayou_blues:beard_moss_juice"
+  }
+}

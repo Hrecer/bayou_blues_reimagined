@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.teamaurora.bayou_blues.core.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "ItemBlockRenderTypesMixin"
+  ],
+  "mixins": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

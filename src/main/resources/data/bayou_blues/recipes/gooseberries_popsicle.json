@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " mm",
+    "imm",
+    "-i "
+  ],
+  "key": {
+    "m": {
+      "item": "bayou_blues:gooseberries"
+    },
+    "i": {
+      "item": "minecraft:ice"
+    },
+    "-": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "bayou_blues:gooseberries_popsicle"
+  }
+}

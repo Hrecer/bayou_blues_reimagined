@@ -1,0 +1,15 @@
+{
+  "multipart": [
+    {
+      "when": { "down": true },
+      "apply": { "model": "bayou_blues:block/cypress_post", "x": 180 }
+    },
+    {
+      "apply": { "model": "bayou_blues:block/cypress_post" }
+    },
+    {
+      "when": { "up": true },
+      "apply": { "model": "bayou_blues:block/cypress_post" }
+    }
+  ]
+}
