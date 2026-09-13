@@ -6,4 +6,4 @@ The Bayou is rich in vegetation, including cypress trees, Spanish moss, algae, g
 
 The mod also adds a series of foods made from gooseberries, as well as vanilla-style swamp foods.
 
-This mod is an unofficial remake of Bayou Blues and Bayou Delight.
+This mod is an unofficial remake of Bayou Blues, Bayou Delight and Better Badlands.
