@@ -1,0 +1,245 @@
+// ASM for the Quark jar patch below (same libs ForgeGradle uses)
+buildscript {
+    repositories { mavenCentral() }
+    dependencies {
+        classpath 'org.ow2.asm:asm:9.7.1'
+        classpath 'org.ow2.asm:asm-tree:9.7.1'
+    }
+}
+
+plugins {
+    id 'eclipse'
+    id 'idea'
+    id 'maven-publish'
+    id 'net.minecraftforge.gradle' version '[6.0,6.2)'
+}
+
+version = mod_version
+group = mod_group_id
+
+base {
+    archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+minecraft {
+    mappings channel: mapping_channel, version: mapping_version
+    copyIdeResources = true
+
+    runs {
+        configureEach {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                "${mod_id}" {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        client {
+            property 'forge.enabledGameTestNamespaces', mod_id
+            property 'mixin.debug', 'true'
+            property 'mixin.debug.export', 'true'
+            property 'mixin.checks', 'false'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            jvmArgs '-Dmixin.debug=true', '-Dmixin.debug.export=true', '-Dmixin.checks=false'
+        }
+
+        server {
+            property 'forge.enabledGameTestNamespaces', mod_id
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            args '--nogui'
+        }
+
+        gameTestServer {
+            property 'forge.enabledGameTestNamespaces', mod_id
+        }
+
+        data {
+            workingDirectory project.file('run-data')
+            args '--mod', mod_id, '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+        }
+    }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+    maven { url "https://maven.minecraftforge.net/" }
+    maven {
+        url "https://cursemaven.com"
+        content { includeGroup "curse.maven" }
+    }
+    maven { url "https://maven.architectury.dev/" }
+    maven {
+        url "https://api.modrinth.com/maven"
+        content { includeGroup "maven.modrinth" }
+    }
+    // Local mod jars (resolve flatDir deps like "blank:X") from ./libs
+    flatDir { dirs 'libs' }
+}
+
+/* ============================================================================================
+ * 【Quark 强制依赖接入全记录】 —— 写给未来的自己/接手者
+ * ============================================================================================
+ * 结论先行：Quark 在本项目是【强制依赖】（mods.toml mandatory=true），不是联动、不是可选
+ * 兼容。它提供的方块体系（竖直台阶 / 变种书架 / 树篱 / 木柱 / 变种梯子 / 箱子体系）就是
+ * BayouBlues 自身内容的一部分。因此它不该出现在任何"联动声明"里。
+ *
+ * ── 为什么要强制依赖 ────────────────────────────────────────────────────────────────────────
+ * 早期方案是"可选联动 + 反射注册 + 失败回退普通 Block"，结果：
+ *   - 反射构造失败 → 注册表里有键但方块行为/模型全错 → 游戏里大片紫黑方块；
+ *   - 用户裁定：内容完整性优先，Quark 升级为强制依赖，严禁禁用任何 Quark Mixin/模块。
+ *
+ * ── 依赖怎么接 ──────────────────────────────────────────────────────────────────────────────
+ *   - libs/ 放本地 Quark-4.0-462.jar，flatDir 解析 "blank:X" 形式的依赖；
+ *   - Zeta 必须同时引入，且要用 implementation —— 否则编译期看不到
+ *     Zeta 的类（BayouBluesBlocksQuark 直接 new Quark 的方块类，构造器要传 ZetaModule）；
+ *   - Quark 版本须 ≥ 4.0-461：Zeta 启动时校验 "Mod zeta only supports quark 4.0-461 or
+ *     above"，4.0-460 启动会失败。
+ *
+ * ── 构建期 ASM 修补（下面的 patchQuarkJar）─────────────────────────────────────────────────
+ * 【问题】fg.deobf 后 dev(mojmap) 中 HumanoidArmorLayerMixin 的 Optifine 兼容处理器
+ *   quark$getArmorGlintOptifine 无法复现生产环境的解析结果：它要么命中无 armorEntityGlint()
+ *   调用的 vanilla A 泛型重载（0 命中），要么与 vanilla 处理器同时成功（违反 @Group max=1），
+ *   启动即崩。注意：这不代表 Quark 有 bug，生产环境（非 dev 重映射）不会触发。
+ * 【方案】构建期用 ASM 把该方法上的注入注解（@ModifyExpressionValue + @Group）摘掉，
+ *   方法体保留为死代码；vanilla 处理器 quark$getArmorGlint 照常注入并调用
+ *   getArmorEntityGlint()，颜色符文（ColorRunes）功能完整不变。其余全部 mixin 原样保留。
+ * 【铁律】严禁"顺手"禁用其他 Mixin/模块来绕问题 —— 那会静默改变 Quark 行为。
+ *
+ * ── Zeta 的隐藏符号（本项目最诡异的一战，完整复盘见 BayouBluesBlocksQuark.java 顶部注释）────
+ * Zeta 的 biome modifier 会给【每个群系】的【每个 Decoration 步骤】末尾追加一个无注册键的
+ * 占位特性（日志显示为 "?"），且插入位置相对其他 mod 的 modifier 每次启动随机（注册表并行
+ * 加载）。它与跨群系共享的 placed feature 相遇时会让 vanilla FeatureSorter 拓扑排序成环：
+ *   百合(沼泽) → 占位符 → 百合(bayou) → 百合(沼泽)  ⇒ "Feature order cycle"，生成区块必崩。
+ * 修复：bayou 群系使用独立副本 placed feature「patch_lily_*_bayou」（指向相同 configured
+ * feature），与其他群系的注入实例解耦。给 bayou 加新特性时同样要遵守：凡该 placed feature
+ * 也会被 biome_modifier 注入到别的群系（尤其 vanilla swamp），必须做独立副本！
+ * ============================================================================================ */
+
+def patchQuarkJar = {
+    def originalJar = file('libs/Quark-4.0-462.jar')
+    def fixedDir = file("${buildDir}/quark-fixed")
+    def fixedJar = file("${fixedDir}/QuarkFixed-4.0-462.jar")
+    if (!originalJar.exists()) { return null }
+    if (!fixedJar.exists() || originalJar.lastModified() > fixedJar.lastModified()) {
+        fixedDir.mkdirs()
+        logger.lifecycle('[Patch] Quark: ASM annotation removal on HumanoidArmorLayerMixin...')
+        def baos = new ByteArrayOutputStream()
+        def jarFile = new java.util.jar.JarFile(originalJar)
+        def jarOutput = new java.util.jar.JarOutputStream(baos)
+        def total = 0
+        jarFile.entries().each { entry ->
+            jarOutput.putNextEntry(new java.util.jar.JarEntry(entry.name))
+            def data = jarFile.getInputStream(entry).readAllBytes()
+            if (entry.name == 'org/violetmoon/quark/mixin/mixins/client/HumanoidArmorLayerMixin.class') {
+                def cr = new org.objectweb.asm.ClassReader(data)
+                def cn = new org.objectweb.asm.tree.ClassNode()
+                cr.accept(cn, 0)
+                def m = cn.methods.find { it.name == 'quark$getArmorGlintOptifine' }
+                if (m != null && m.visibleAnnotations != null) {
+                    def before = m.visibleAnnotations.size()
+                    m.visibleAnnotations.removeIf { a -> a.desc.contains('ModifyExpressionValue') || a.desc.contains('mixin/injection/Group') }
+                    def removed = before - m.visibleAnnotations.size()
+                    total += removed
+                    logger.lifecycle("[Patch] Quark:  ${entry.name}: removed ${removed} annotations from quark\$getArmorGlintOptifine")
+                }
+                def cw = new org.objectweb.asm.ClassWriter(0)
+                cn.accept(cw)
+                data = cw.toByteArray()
+            }
+            jarOutput.write(data)
+            jarOutput.closeEntry()
+        }
+        jarFile.close()
+        jarOutput.close()
+        fixedJar.bytes = baos.toByteArray()
+        logger.lifecycle("[Patch] Quark: Total ${total} replacements -> ${fixedJar}")
+    }
+    return fixedJar
+}
+def quarkFixedJar = patchQuarkJar()
+
+dependencies {
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+
+    // Mixin annotation processor
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    // TerraBlender for biome generation (CurseMaven)
+    implementation fg.deobf("curse.maven:terrablender-563928:6290448")
+
+    // Farmers Delight is a mandatory dependency (mods.toml): the cutting board
+    // recipes and the cookie's food properties integrate with it.
+    implementation fg.deobf("maven.modrinth:farmers-delight:1.20.1-1.3.4")
+
+    // Mod compatibility - compile only, not included in final jar
+    compileOnly files(
+        'libs/Quark-4.0-462.jar',
+        'libs/environmental-1.20.1-4.1.2.jar'
+    )
+
+    // Quark is a mandatory dependency (mods.toml) - compile and runtime use the
+    // patched jar (flatDir repo + fg.deobf). Zeta loads from libs.
+    repositories.flatDir { dirs "${buildDir}/quark-fixed" }
+    implementation fg.deobf("blank:QuarkFixed:4.0-462")
+    implementation fg.deobf("blank:Zeta:1.0-31")
+}
+
+tasks.named('processResources', ProcessResources).configure {
+    var replaceProperties = [
+            minecraft_version: minecraft_version, minecraft_version_range: minecraft_version_range,
+            forge_version: forge_version, forge_version_range: forge_version_range,
+            loader_version_range: loader_version_range,
+            mod_id: mod_id, mod_name: mod_name, mod_license: mod_license, mod_version: mod_version,
+            mod_authors: mod_authors,
+    ]
+    inputs.properties replaceProperties
+
+    // mods.toml 里的作者与简介含中文，按 UTF-8 读写，避免被当成 ISO-8859-1 处理
+    filteringCharset = 'UTF-8'
+
+    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+        expand replaceProperties + [project: project]
+    }
+}
+
+tasks.named('jar', Jar).configure {
+    manifest {
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_authors,
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : project.jar.archiveVersion,
+                'Implementation-Vendor'   : mod_authors,
+                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+    finalizedBy 'reobfJar'
+}
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file://${project.projectDir}/mcmodsrepo"
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
