@@ -27,3 +27,6 @@ forge*changelog.txt
 # third-party reference sources
 /参考源码/
 /libs/
+
+# local dev convenience files (not part of the mod)
+/启动游戏.bat
