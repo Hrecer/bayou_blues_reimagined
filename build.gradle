@@ -123,6 +123,22 @@ repositories {
  * 修复：bayou 群系使用独立副本 placed feature「patch_lily_*_bayou」（指向相同 configured
  * feature），与其他群系的注入实例解耦。给 bayou 加新特性时同样要遵守：凡该 placed feature
  * 也会被 biome_modifier 注入到别的群系（尤其 vanilla swamp），必须做独立副本！
+ * 【2026-09-15 二次成环（bayou ↔ environmental:marsh），同类问题的新形态】
+ *   Environmental 的 marsh 群系【基础 JSON】里含 G = environmental:patch_giant_tall_grass_marsh；
+ *   我们又用 forge:add_features 把同一个 G 注入 bayou。marsh 里 G 在 Zeta 占位符之前（基础列表恒如此），
+ *   bayou 里 G 是 modifier 追加的，相对占位符的位置随机 ⇒ 随机成环（involved sources 恰为两群系）。
+ *   教训升级：不仅"共享 + 独立副本"，还要注意【基础列表出现 vs modifier 追加出现】的实例也互斥。
+ *   因为 Environmental 是可选依赖（JSON 副本会在缺失时炸 datapack 解析），数据副本走不通，
+ *   最终新增代码侧 modifier 类型 bayou_blues:copy_features（CopyFeaturesBiomeModifier）：
+ *   注入时构造全新 PlacedFeature 实例（同 configured feature + 同 placement），副本仅存在于
+ *   目标群系 ⇒ 与占位符、与其他群系彻底零共享，机制上根除此类环。environmental_compatibility.json
+ *   已改用 copy_features。今后凡向 bayou 注入【别的 mod 的 / 原版的】placed feature，一律用它。
+ * 【1.2.3 首版 copy_features 依然崩的复盘（record equals 陷阱）】
+ *   FeatureSorter 用 Object2IntOpenHashMap#computeIfAbsent（按 equals）给 PlacedFeature 分配
+ *   图节点，而 PlacedFeature 是 record、equals 按值比较；"新实例 + 相同 placement 列表（同一批
+ *   PlacementModifier 实例，List.equals 逐元素为真）"的副本与原实例 equals 相等 ⇒ 副本被合并回
+ *   同一节点，修复完全失效。副本必须打破值相等：追加一个额外的无副作用 BiomeFilter（placed
+ *   feature 链本就以 BiomeFilter 结尾，重复纯谓词不改变放置行为）。详见 CopyFeaturesBiomeModifier。
  * ============================================================================================ */
 
 def patchQuarkJar = {

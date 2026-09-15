@@ -65,6 +65,8 @@ public class BayouBlues {
 
         // Register conditional biome modifier serializer
         com.teamaurora.bayou_blues.core.forge.ConditionalBiomeModifier.SERIALIZERS.register(modEventBus);
+        // Register copy_features biome modifier serializer（独立副本注入，防 Feature order cycle）
+        com.teamaurora.bayou_blues.core.forge.CopyFeaturesBiomeModifier.SERIALIZERS.register(modEventBus);
         net.minecraftforge.common.crafting.CraftingHelper.register(com.teamaurora.bayou_blues.core.forge.ConfigCondition.Serializer.INSTANCE);
         
         // Register Config

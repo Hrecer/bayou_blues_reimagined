@@ -5,7 +5,7 @@
     "modid": "environmental"
   },
   "modifier": {
-    "type": "forge:add_features",
+    "type": "bayou_blues:copy_features",
     "biomes": [
       "bayou_blues:bayou"
     ],

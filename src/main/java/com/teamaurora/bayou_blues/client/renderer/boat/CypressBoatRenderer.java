@@ -24,7 +24,9 @@ import javax.annotation.Nonnull;
  */
 public class CypressBoatRenderer extends EntityRenderer<CypressBoatEntity> {
     private static final ResourceLocation TEXTURE = BayouBlues.location("textures/entity/boat/cypress.png");
-    private static final ModelLayerLocation BOAT_LAYER = new ModelLayerLocation(ResourceLocation.withDefaultNamespace("boat/oak"), "main");
+    // 1.20.1 API: ResourceLocation.withDefaultNamespace(String) only exists in 1.21+,
+    // using it here crashes with NoSuchMethodError on 1.20.1 (see crash 2026-09-15).
+    private static final ModelLayerLocation BOAT_LAYER = new ModelLayerLocation(new ResourceLocation("minecraft", "boat/oak"), "main");
     private final BoatModel model;
 
     public CypressBoatRenderer(EntityRendererProvider.Context context) {

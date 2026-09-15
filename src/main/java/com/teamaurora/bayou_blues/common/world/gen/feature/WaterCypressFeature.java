@@ -118,7 +118,10 @@ public class WaterCypressFeature extends Feature<TreeConfiguration> {
         // Check if space is clear
         boolean flag = true;
         for (DirectionalBlockPos log : logs) {
-            if (!isAirOrWaterOrLeaves(world, log.pos)) {
+            // 用宽容判定：本模组残留的柏树原木（上次装饰被中断的半截树）不视为
+            // 障碍，强制覆盖放置即可补全整棵树；详见 TreeUtil.isValidTrunkPosition。
+            // （水面巨型柏树还需放行水方块，同 WaterMegaCypressFeature。）
+            if (!TreeUtil.isValidTrunkPosition(world, log.pos) && world.getBlockState(log.pos).getBlock() != Blocks.WATER) {
                 flag = false;
                 break;
             }

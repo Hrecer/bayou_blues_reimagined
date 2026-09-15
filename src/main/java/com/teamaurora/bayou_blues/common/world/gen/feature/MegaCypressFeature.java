@@ -98,7 +98,9 @@ public class MegaCypressFeature extends Feature<TreeConfiguration> {
 
         boolean flag = true;
         for (DirectionalBlockPos log : logs) {
-            if (!TreeUtil.isAirOrLeaves(world, log.pos)) {
+            // 用宽容判定：本模组残留的柏树原木（上次装饰被中断的半截树）不视为
+            // 障碍，强制覆盖放置即可补全整棵树；详见 TreeUtil.isValidTrunkPosition。
+            if (!TreeUtil.isValidTrunkPosition(world, log.pos)) {
                 flag = false;
             }
         }
