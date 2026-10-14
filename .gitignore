@@ -29,4 +29,5 @@ forge*changelog.txt
 /libs/
 
 # local dev convenience files (not part of the mod)
+/PORTING-NOTES.md
 /启动游戏.bat
