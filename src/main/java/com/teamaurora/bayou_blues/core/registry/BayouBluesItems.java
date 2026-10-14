@@ -43,6 +43,7 @@ public class BayouBluesItems {
     public static final RegistryObject<Item> LILY_LILY_PAD_SOUP = createItem("lily_lily_pad_soup", () -> new ContainerFoodItem(new Item.Properties().food(Foods.LILY_LILY_PAD_SOUP).stacksTo(1), () -> Items.BOWL));
 
     public static final RegistryObject<Item> ALGAE = createItem("algae", () -> new AlgaeItem(BayouBluesBlocks.ALGAE.get(), new Item.Properties()));
+    public static final RegistryObject<Item> SAGUARO_FLOWER = createItem("saguaro_flower", () -> new SaguaroFlowerItem(new Item.Properties()));
     public static final RegistryObject<Item> BLUE_LILY = createItem("blue_lily", () -> new LilyItem(BayouBluesBlocks.BLUE_LILY, BayouBluesBlocks.POTTED_BLUE_LILY, new Item.Properties()));
     public static final RegistryObject<Item> LIGHT_GRAY_LILY = createItem("light_gray_lily", () -> new LilyItem(BayouBluesBlocks.LIGHT_GRAY_LILY, BayouBluesBlocks.POTTED_LIGHT_GRAY_LILY, new Item.Properties()));
     public static final RegistryObject<Item> CYAN_LILY = createItem("cyan_lily", () -> new LilyItem(BayouBluesBlocks.CYAN_LILY, BayouBluesBlocks.POTTED_CYAN_LILY, new Item.Properties()));

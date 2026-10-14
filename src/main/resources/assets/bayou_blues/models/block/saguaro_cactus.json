@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "top": "bayou_blues:block/saguaro_cactus_top",
+    "side": "bayou_blues:block/saguaro_cactus_side",
+    "bottom": "bayou_blues:block/saguaro_cactus_inner"
+  }
+}

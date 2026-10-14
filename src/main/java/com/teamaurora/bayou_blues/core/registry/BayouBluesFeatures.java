@@ -44,14 +44,22 @@ public class BayouBluesFeatures {
      */
     public static final RegistryObject<Feature<TreeConfiguration>> SMALL_DARK_OAK_TREE = FEATURES.register("small_dark_oak_tree", () -> new SmallDarkOakFeature(TreeConfiguration.CODEC));
 
+    /**
+     * 萨瓜罗仙人掌（恶地专属）。移植自 Better Badlands 的
+     * {@code BetterBadlandsFeatures.SAGUARO_CACTUS}，配置与放置由 datapack JSON 提供。
+     */
+    public static final RegistryObject<Feature<TreeConfiguration>> SAGUARO_CACTUS = FEATURES.register("saguaro_cactus", () -> new SaguaroCactusFeature(TreeConfiguration.CODEC));
+
     // Resource Keys for ConfiguredFeatures (for sapling tree growing)
     public static final ResourceKey<ConfiguredFeature<?, ?>> CYPRESS_GROWN = createConfiguredKey("cypress_grown");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_CYPRESS_GROWN = createConfiguredKey("mega_cypress_grown");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SAGUARO_CACTUS_KEY = createConfiguredKey("saguaro_cactus");
 
     // Configured inner class for easy access from CypressTree
     public static final class Configured {
         public static final ResourceKey<ConfiguredFeature<?, ?>> CYPRESS_GROWN = BayouBluesFeatures.CYPRESS_GROWN;
         public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_CYPRESS_GROWN = BayouBluesFeatures.MEGA_CYPRESS_GROWN;
+        public static final ResourceKey<ConfiguredFeature<?, ?>> SAGUARO_CACTUS = BayouBluesFeatures.SAGUARO_CACTUS_KEY;
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createConfiguredKey(String name) {

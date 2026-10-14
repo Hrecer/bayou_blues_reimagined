@@ -102,6 +102,9 @@ public class BayouBluesTabs {
         acceptBlock(output, BayouBluesBlocksBadlands.KINDLING_SLAB);
         acceptBlock(output, BayouBluesBlocksBadlands.KINDLING_STAIRS);
         acceptBlock(output, BayouBluesBlocksBadlands.KINDLING_VERTICAL_SLAB);
+        acceptBlock(output, BayouBluesBlocksBadlands.SAGUARO_CACTUS);
+        acceptBlock(output, BayouBluesBlocksBadlands.SMALL_SAGUARO_CACTUS);
+        accept(output, BayouBluesItems.SAGUARO_FLOWER);
         acceptBlock(output, BayouBluesBlocksBadlands.TERRACOTTA_LAMP);
         acceptBlock(output, BayouBluesBlocksBadlands.WHITE_TERRACOTTA_LAMP);
         acceptBlock(output, BayouBluesBlocksBadlands.LIGHT_GRAY_TERRACOTTA_LAMP);

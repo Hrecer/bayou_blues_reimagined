@@ -22,37 +22,49 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
+/**
+ * 引火物接口，按 Better Badlands 1.16.5（master，1.0.5）逐行移植。
+ *
+ * <p>燃烧链：点燃（burn_distance=1）→ 30 tick 后向四邻蔓延（每格 +1，上限 21）
+ * 并把自身置为 burned → 下一 tick 爆出碎枝粒子、移除自身；若此时邻接可燃方块，
+ * 则在本格放火（原版的 <code>catchFire + setBlockState(FIRE)</code> 净效果）。
+ * 邻接岩浆时方块无掉落销毁（放置/邻居更新两条路径）。
+ *
+ * <p><b>与原版唯一的行为差异</b>：原版只在方块放置时安排一次 30 tick 计时器，
+ * 若放置超时后再用打火石点燃，状态会停在 burn_distance=1 永远不推进（卡死缺陷）。
+ * 这里在所有点燃路径（打火石/火焰弹/火焰邻居/投射物/邻火刻）都补了一次排程，
+ * 保证燃烧链必然启动；其余数值（30 tick 节奏、1/21 上限、粒子与音效）与原版一致。
+ */
 public interface IKindling {
     IntegerProperty BURN_DISTANCE = IntegerProperty.create("burn_distance", 0, 21);
     BooleanProperty IS_BURNED = BooleanProperty.create("is_burned");
+    int TO_SCHEDULE = 30;
+
+    /** 原版 getEquation：dist ≤ 21 时恒为 0，即自毁相位在下一 tick 执行。 */
+    static int getEquation(int x) {
+        int i = 8;
+        return (x * (x / 5)) / (25 * i);
+    }
+
+    default void ignite(Level level, BlockPos pos, BlockState state) {
+        level.setBlock(pos, state.setValue(BURN_DISTANCE, 1), 3);
+        level.scheduleTick(pos, state.getBlock(), TO_SCHEDULE);
+    }
 
     default void onProjectileHitKindling(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
         if (!level.isClientSide && projectile.isOnFire()) {
-            BlockPos pos = hit.getBlockPos();
-            level.setBlock(pos, state.setValue(BURN_DISTANCE, 1).setValue(IS_BURNED, false), 3);
-            level.scheduleTick(pos, state.getBlock(), 10);
+            this.ignite(level, hit.getBlockPos(), state);
         }
     }
 
     default InteractionResult useKindling(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
-        ItemStack itemstack = player.getItemInHand(hand);
-        if (itemstack.is(Items.FLINT_AND_STEEL)) {
-            level.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
+        ItemStack stack = player.getItemInHand(hand);
+        if (stack.is(Items.FLINT_AND_STEEL) || stack.is(Items.FIRE_CHARGE)) {
+            level.playSound(player, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.PLAYERS, 1.0F, level.getRandom().nextFloat() * 0.4F + 0.8F);
             if (!level.isClientSide) {
-                level.setBlock(pos, state.setValue(BURN_DISTANCE, 1).setValue(IS_BURNED, false), 3);
-                level.scheduleTick(pos, state.getBlock(), 10);
-                itemstack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        } else if (itemstack.is(Items.FIRE_CHARGE)) {
-            level.playSound(player, pos, SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0F, (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.2F + 1.0F);
-            if (!level.isClientSide) {
-                level.setBlock(pos, state.setValue(BURN_DISTANCE, 1).setValue(IS_BURNED, false), 3);
-                level.scheduleTick(pos, state.getBlock(), 10);
-                if (!player.isCreative()) {
-                    itemstack.shrink(1);
-                }
+                this.ignite(level, pos, state);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -60,59 +72,91 @@ public interface IKindling {
     }
 
     default void neighborChangedKindling(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        if (!level.isClientSide && state.getValue(BURN_DISTANCE) == 0 && isNextToFire(level, pos)) {
-            level.setBlock(pos, state.setValue(BURN_DISTANCE, 1).setValue(IS_BURNED, false), 3);
-            level.scheduleTick(pos, state.getBlock(), 10);
+        if (level.isClientSide) {
+            return;
+        }
+        boolean lava = false;
+        boolean fire = false;
+        for (Direction dir : Direction.values()) {
+            BlockState neighbor = level.getBlockState(pos.relative(dir));
+            if (neighbor.is(Blocks.LAVA)) {
+                lava = true;
+            } else if (neighbor.is(Blocks.FIRE)) {
+                fire = true;
+            }
+        }
+        if (lava) {
+            level.destroyBlock(pos, false);
+        } else if (fire) {
+            this.ignite(level, pos, state);
         }
     }
 
     default void onPlaceKindling(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
-        if (!level.isClientSide && state.getValue(BURN_DISTANCE) == 0 && isNextToFire(level, pos)) {
-            level.setBlock(pos, state.setValue(BURN_DISTANCE, 1).setValue(IS_BURNED, false), 3);
-            level.scheduleTick(pos, state.getBlock(), 10);
+        if (level.isClientSide) {
+            return;
         }
-    }
-
-    default boolean isNextToFire(Level level, BlockPos pos) {
+        boolean lava = false;
         for (Direction dir : Direction.values()) {
-            BlockState adj = level.getBlockState(pos.relative(dir));
-            if (adj.is(Blocks.FIRE) || adj.is(Blocks.SOUL_FIRE) || adj.is(Blocks.LAVA)) {
-                return true;
+            if (level.getBlockState(pos.relative(dir)).is(Blocks.LAVA)) {
+                lava = true;
+                break;
             }
         }
-        return false;
+        if (lava) {
+            level.destroyBlock(pos, false);
+        } else {
+            level.scheduleTick(pos, state.getBlock(), TO_SCHEDULE);
+        }
     }
 
-    default void tickKindling(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
+    default void tickKindling(BlockState state, ServerLevel level, BlockPos pos, RandomSource rand) {
         int dist = state.getValue(BURN_DISTANCE);
-        boolean burned = state.getValue(IS_BURNED);
-        if (dist > 0) {
-            if (!burned) {
-                for (Direction direction : Direction.values()) {
-                    BlockPos adjPos = pos.relative(direction);
-                    BlockState adjState = level.getBlockState(adjPos);
-                    Block adjBlock = adjState.getBlock();
-                    if (adjBlock instanceof IKindling) {
-                        int adjDist = adjState.getValue(BURN_DISTANCE);
-                        if (adjDist == 0 && dist < 21) {
-                            level.setBlock(adjPos, adjState.setValue(BURN_DISTANCE, dist + 1).setValue(IS_BURNED, false), 3);
-                            level.scheduleTick(adjPos, adjBlock, 10 + random.nextInt(5));
-                        }
-                    } else if (adjBlock instanceof TntBlock) {
-                        adjState.onCaughtFire(level, adjPos, direction.getOpposite(), null);
-                        level.removeBlock(adjPos, false);
-                    } else if (direction == Direction.UP && adjState.isAir() && dist == 21) {
-                        level.setBlock(adjPos, Blocks.FIRE.defaultBlockState(), 3);
+        if (state.getValue(IS_BURNED)) {
+            VoxelShape shape = state.getShape(level, pos);
+            double x = pos.getX() + Math.min(shape.max(Direction.Axis.X), rand.nextDouble()) * 0.1D;
+            double y = pos.getY() + Math.min(shape.max(Direction.Axis.Y), rand.nextDouble());
+            double z = pos.getZ() + Math.min(shape.max(Direction.Axis.Z), rand.nextDouble()) * 0.1D;
+            level.sendParticles(ParticleTypes.LAVA, x, y, z, rand.nextInt(5) + 1, rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 0.0D);
+            level.sendParticles(BayouBluesParticles.TWIG.get(), x, y, z, rand.nextInt(10) + 5, rand.nextFloat(), rand.nextFloat(), rand.nextFloat(), 0.0D);
+            level.setBlock(pos, Blocks.AIR.defaultBlockState(), 3);
+            level.playSound(null, pos, SoundEvents.GENERIC_BURN, SoundSource.PLAYERS, 1.0F, rand.nextFloat() * 0.4F + 0.8F);
+            for (Direction direction : Direction.values()) {
+                BlockPos neighborPos = pos.relative(direction);
+                BlockState neighbor = level.getBlockState(neighborPos);
+                if (neighbor.isFlammable(level, neighborPos, direction.getOpposite())) {
+                    level.setBlock(pos, Blocks.FIRE.defaultBlockState(), 3);
+                    if (neighbor.getBlock() instanceof TntBlock) {
+                        level.setBlock(neighborPos, Blocks.AIR.defaultBlockState(), 3);
                     }
                 }
-                level.setBlock(pos, state.setValue(IS_BURNED, true), 3);
-                level.scheduleTick(pos, state.getBlock(), 10);
-            } else {
-                level.removeBlock(pos, false);
-                level.playSound(null, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (random.nextFloat() - random.nextFloat()) * 0.8F);
-                level.sendParticles(BayouBluesParticles.TWIG.get(), pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 15, 0.25D, 0.25D, 0.25D, 0.0D);
-                level.sendParticles(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 5, 0.25D, 0.25D, 0.25D, 0.0D);
-                level.sendParticles(ParticleTypes.FLAME, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 5, 0.25D, 0.25D, 0.25D, 0.0D);
+            }
+            return;
+        }
+        if (dist > 0) {
+            level.playSound(null, pos, SoundEvents.FIRE_AMBIENT, SoundSource.PLAYERS, 1.0F, rand.nextFloat() * 0.4F + 0.8F);
+            if (dist < 21) {
+                for (Direction dir : Direction.values()) {
+                    BlockPos neighborPos = pos.relative(dir);
+                    BlockState neighbor = level.getBlockState(neighborPos);
+                    if (neighbor.getBlock() instanceof IKindling) {
+                        if (neighbor.getValue(BURN_DISTANCE) == 0) {
+                            level.setBlock(neighborPos, neighbor.setValue(BURN_DISTANCE, dist + 1), 3);
+                            level.scheduleTick(neighborPos, neighbor.getBlock(), TO_SCHEDULE);
+                        }
+                    } else if (neighbor.getBlock() instanceof TntBlock) {
+                        neighbor.getBlock().onCaughtFire(neighbor, level, neighborPos, dir.getOpposite(), null);
+                    }
+                }
+            }
+            level.setBlock(pos, state.setValue(IS_BURNED, true), 3);
+            level.scheduleTick(pos, state.getBlock(), getEquation(dist));
+        } else {
+            for (Direction dir : Direction.values()) {
+                if (level.getBlockState(pos.relative(dir)).is(Blocks.FIRE)) {
+                    this.ignite(level, pos, state);
+                    break;
+                }
             }
         }
     }

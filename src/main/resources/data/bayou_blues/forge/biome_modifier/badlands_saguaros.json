@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_features",
+  "biomes": [
+    "minecraft:badlands",
+    "minecraft:eroded_badlands",
+    "minecraft:wooded_badlands"
+  ],
+  "features": [
+    "bayou_blues:saguaro_cactus"
+  ],
+  "step": "vegetal_decoration"
+}

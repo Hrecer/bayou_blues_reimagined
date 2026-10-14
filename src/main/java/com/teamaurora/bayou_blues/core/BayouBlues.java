@@ -44,6 +44,8 @@ public class BayouBlues {
         BayouBluesBlockEntities.BLOCK_ENTITIES.register(modEventBus);
         BayouBluesTabs.TABS.register(modEventBus);
         BayouBluesParticles.PARTICLES.register(modEventBus);
+        BayouBluesEffects.EFFECTS.register(modEventBus);
+        BayouBluesEffects.POTIONS.register(modEventBus);
         BayouBluesBlocks.registerCompatBlocks();
         BayouBluesFeatures.FEATURES.register(modEventBus);
         BayouBluesFeatures.TREE_DECORATORS.register(modEventBus);
@@ -63,6 +65,7 @@ public class BayouBlues {
             BayouBluesCompat.registerCompostables();
             BayouBluesCompat.registerFlammables();
             BayouBluesBlocks.registerFlowerPots();
+            BayouBluesEffects.registerBrewingRecipes();
             DispenserBlock.registerBehavior(BayouBluesItems.CYPRESS_BOAT.get(), new CypressBoatDispenseBehavior());
             BayouBluesTerraBlender.register();
             registerSignBlockEntities();

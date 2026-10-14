@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "bayou_blues:saguaro_cactus"
+  },
+  "result": "minecraft:green_dye",
+  "experience": 1,
+  "cookingtime": 200,
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "quark:flag",
+        "flag": "midori"
+      }
+    }
+  ]
+}

@@ -1,12 +1,14 @@
 package com.teamaurora.bayou_blues.core.registry;
 
 import com.teamaurora.bayou_blues.common.block.badlands.*;
+import com.teamaurora.bayou_blues.common.block.trees.SaguaroCactusTree;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.FlowerPotBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -42,6 +44,13 @@ public final class BayouBluesBlocksBadlands {
     public static final RegistryObject<Block> RED_TERRACOTTA_LAMP = createBlock("red_terracotta_lamp", () -> new TerracottaLampBlock(lampProperties()));
     public static final RegistryObject<Block> WHITE_TERRACOTTA_LAMP = createBlock("white_terracotta_lamp", () -> new TerracottaLampBlock(lampProperties()));
     public static final RegistryObject<Block> YELLOW_TERRACOTTA_LAMP = createBlock("yellow_terracotta_lamp", () -> new TerracottaLampBlock(lampProperties()));
+
+    // saguaro cactus（BBB 移植；sprout/flower 无自身物品，见 BayouBluesItems.SAGUARO_FLOWER）
+    public static final RegistryObject<Block> SAGUARO_CACTUS = createBlock("saguaro_cactus", () -> new SaguaroCactusBlock(BlockBehaviour.Properties.copy(Blocks.CACTUS)));
+    public static final RegistryObject<Block> SMALL_SAGUARO_CACTUS = createBlock("small_saguaro_cactus", () -> new SmallSaguaroCactusBlock(BlockBehaviour.Properties.copy(Blocks.CACTUS)));
+    public static final RegistryObject<Block> SAGUARO_SPROUT = createBlockNoItem("saguaro_sprout", () -> new SaguaroSproutBlock(new SaguaroCactusTree(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING).sound(SoundType.WOOL)));
+    public static final RegistryObject<Block> SAGUARO_FLOWER = createBlockNoItem("saguaro_flower", () -> new SaguaroFlowerBlock(BlockBehaviour.Properties.copy(Blocks.OXEYE_DAISY)));
+    public static final RegistryObject<Block> POTTED_SAGUARO_SPROUT = createBlockNoItem("potted_saguaro_sprout", () -> new FlowerPotBlock(SAGUARO_SPROUT.get(), BlockBehaviour.Properties.copy(Blocks.POTTED_ALLIUM)));
 
     private BayouBluesBlocksBadlands() {}
 
