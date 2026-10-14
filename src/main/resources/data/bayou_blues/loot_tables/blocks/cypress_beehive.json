@@ -38,7 +38,7 @@
                 },
                 {
                   "function": "minecraft:copy_state",
-                  "block": "bayou_blues:cypress_beehive",
+                  "block": "minecraft:beehive",
                   "properties": ["honey_level"]
                 }
               ],
