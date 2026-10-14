@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
@@ -36,11 +35,9 @@ import java.util.function.Supplier;
 public class DoubleCypressKneeBlock extends Block implements SimpleWaterloggedBlock {
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
-    protected static final VoxelShape SHAPE_LOWER = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 16.0D, 15.0D);
-    protected static final VoxelShape SHAPE_UPPER = Shapes.or(
-            Block.box(1.0D, 0.0D, 1.0D, 15.0D, 4.0D, 15.0D),
-            Block.box(3.0D, 4.0D, 3.0D, 13.0D, 16.0D, 13.0D)
-    );
+    protected static final VoxelShape SHAPE_LOWER = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
+    protected static final VoxelShape SHAPE_UPPER = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 8.0D, 11.0D);
+    protected static final VoxelShape SHAPE_UPPER_COLLISION = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 5.0D, 11.0D);
     @Nullable
     private final Supplier<Block> strippedBlock;
 
@@ -83,6 +80,11 @@ public class DoubleCypressKneeBlock extends Block implements SimpleWaterloggedBl
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return state.getValue(HALF) == DoubleBlockHalf.LOWER ? SHAPE_LOWER : SHAPE_UPPER;
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return state.getValue(HALF) == DoubleBlockHalf.LOWER ? SHAPE_LOWER : SHAPE_UPPER_COLLISION;
     }
 
     @Override
