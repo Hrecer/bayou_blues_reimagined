@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Specification-Title: bayou_blues
+Specification-Vendor: Team Aurora
+Specification-Version: 1
+Implementation-Title: bayou_blues_reimagined
+Implementation-Version: 1.2.2
+Implementation-Vendor: Team Aurora
+Implementation-Timestamp: 2026-09-15T19:59:02+0800
+

@@ -1,33 +1,33 @@
 modLoader = "javafml"
-loaderVersion = "${loader_version_range}"
+loaderVersion = "[47,)"
 issueTrackerURL = "https://github.com/teamauroramods/BayouBlues/issues"
-license = "${mod_license}"
+license = "All Rights Reserved (assets) / GPL-3.0-or-later (code)"
 
 [[mods]]
-modId = "${mod_id}"
-version = "${mod_version}"
-displayName = "${mod_name}"
-authors = "${mod_authors}"
+modId = "bayou_blues"
+version = "1.2.2"
+displayName = "Bayou Blues"
+authors = "Team Aurora"
 description = '''原作者：Team Aurora'''
 displayURL = "https://discord.gg/VzXSCFp"
 logoFile = "logo.png"
 
-[[dependencies.${mod_id}]]
+[[dependencies.bayou_blues]]
 modId = "forge"
 mandatory = true
-versionRange = "${forge_version_range}"
+versionRange = "[47,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies.bayou_blues]]
 modId = "minecraft"
 mandatory = true
-versionRange = "${minecraft_version_range}"
+versionRange = "[1.20.1,1.21)"
 ordering = "NONE"
 side = "BOTH"
 
 # Required dependencies
-[[dependencies.${mod_id}]]
+[[dependencies.bayou_blues]]
 modId = "terrablender"
 mandatory = true
 versionRange = "[3.0,)"
@@ -35,7 +35,7 @@ ordering = "AFTER"
 side = "BOTH"
 
 # Required dependencies
-[[dependencies.${mod_id}]]
+[[dependencies.bayou_blues]]
 modId = "quark"
 mandatory = true
 versionRange = "[4.0,)"
@@ -43,7 +43,7 @@ ordering = "AFTER"
 side = "BOTH"
 
 # Required dependencies
-[[dependencies.${mod_id}]]
+[[dependencies.bayou_blues]]
 modId = "farmersdelight"
 mandatory = true
 versionRange = "[1.2,)"
@@ -51,14 +51,14 @@ ordering = "AFTER"
 side = "BOTH"
 
 # Optional dependencies
-[[dependencies.${mod_id}]]
+[[dependencies.bayou_blues]]
 modId = "buzzier_bees"
 mandatory = false
 versionRange = "[6.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.${mod_id}]]
+[[dependencies.bayou_blues]]
 modId = "environmental"
 mandatory = false
 versionRange = "[4.0,)"

@@ -1,5 +1,5 @@
 {
-  "parent": "quark:block/vertical_slab",
+  "parent": "bayou_blues:block/vertical_slab",
   "textures": {
     "bottom": "bayou_blues:block/kindling",
     "top": "bayou_blues:block/kindling",

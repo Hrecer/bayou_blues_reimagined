@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "bayou_blues:algae_thatch_vertical_slab"
+    "bayou_blues:algae_thatch_vertical_slab",
+    "bayou_blues:kindling_vertical_slab"
   ]
 }
