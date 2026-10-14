@@ -5,7 +5,7 @@ license = "All Rights Reserved (assets) / GPL-3.0-or-later (code)"
 
 [[mods]]
 modId = "bayou_blues"
-version = "1.2.2"
+version = "1.2.3"
 displayName = "Bayou Blues"
 authors = "Team Aurora"
 description = '''原作者：Team Aurora'''
