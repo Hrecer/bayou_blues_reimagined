@@ -52,14 +52,17 @@ public class BayouBluesBlocks {
     public static final RegistryObject<Block> LARGE_CYPRESS_KNEE = createBlock("large_cypress_knee", () -> new DoubleCypressKneeBlock(STRIPPED_LARGE_CYPRESS_KNEE, BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
     public static final RegistryObject<Block> CYPRESS_BRANCH = createBlock("cypress_branch", () -> new CypressBranchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).instabreak().noCollission().sound(SoundType.SWEET_BERRY_BUSH)));
 
-    public static final RegistryObject<Block> BLUE_LILY = createBlockNoItem("blue_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
-    public static final RegistryObject<Block> LIGHT_GRAY_LILY = createBlockNoItem("light_gray_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
-    public static final RegistryObject<Block> CYAN_LILY = createBlockNoItem("cyan_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
-    public static final RegistryObject<Block> LIGHT_BLUE_LILY = createBlockNoItem("light_blue_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
-    public static final RegistryObject<Block> MAGENTA_LILY = createBlockNoItem("magenta_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
-    public static final RegistryObject<Block> PINK_LILY = createBlockNoItem("pink_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
-    public static final RegistryObject<Block> PURPLE_LILY = createBlockNoItem("purple_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
-    public static final RegistryObject<Block> WHITE_LILY = createBlockNoItem("white_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_OF_THE_VALLEY)));
+    // 睡莲有可站立的碰撞箱，属性必须来自 LILY_PAD（原版同款）。若换成带 offsetType 的
+    // 花方块属性（如 LILY_OF_THE_VALLEY），1.20.1 会以 "has a collision shape and an
+    // offset type, but is not marked as dynamicShape" 在启动时崩溃。
+    public static final RegistryObject<Block> BLUE_LILY = createBlockNoItem("blue_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD)));
+    public static final RegistryObject<Block> LIGHT_GRAY_LILY = createBlockNoItem("light_gray_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD)));
+    public static final RegistryObject<Block> CYAN_LILY = createBlockNoItem("cyan_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD)));
+    public static final RegistryObject<Block> LIGHT_BLUE_LILY = createBlockNoItem("light_blue_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD)));
+    public static final RegistryObject<Block> MAGENTA_LILY = createBlockNoItem("magenta_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD)));
+    public static final RegistryObject<Block> PINK_LILY = createBlockNoItem("pink_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD)));
+    public static final RegistryObject<Block> PURPLE_LILY = createBlockNoItem("purple_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD)));
+    public static final RegistryObject<Block> WHITE_LILY = createBlockNoItem("white_lily", () -> new LilyFlowerBlock(BlockBehaviour.Properties.copy(Blocks.LILY_PAD)));
 
     public static final RegistryObject<Block> POTTED_BLUE_LILY = createBlockNoItem("potted_blue_lily", () -> new FlowerPotBlock(BLUE_LILY.get(), BlockBehaviour.Properties.copy(Blocks.POTTED_LILY_OF_THE_VALLEY)));
     public static final RegistryObject<Block> POTTED_LIGHT_GRAY_LILY = createBlockNoItem("potted_light_gray_lily", () -> new FlowerPotBlock(LIGHT_GRAY_LILY.get(), BlockBehaviour.Properties.copy(Blocks.POTTED_LILY_OF_THE_VALLEY)));
