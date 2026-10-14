@@ -37,7 +37,7 @@ public class KindlingStairsBlock extends BBBlocks.ThatchStairBlock implements IK
 
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        this.onProjectileCollisionKindling(level, state, hit, projectile);
+        this.onProjectileHitKindling(level, state, hit, projectile);
         super.onProjectileHit(level, state, hit, projectile);
     }
 
@@ -48,20 +48,13 @@ public class KindlingStairsBlock extends BBBlocks.ThatchStairBlock implements IK
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        this.addKindlingProperties(builder)
-                .add(BlockStateProperties.HORIZONTAL_FACING, BlockStateProperties.HALF,
-                        BlockStateProperties.STAIRS_SHAPE, BlockStateProperties.WATERLOGGED);
-    }
-
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-        this.animateTickKindling(state, level, pos, rand);
-        super.animateTick(state, level, pos, rand);
+        super.createBlockStateDefinition(builder);
+        builder.add(BURN_DISTANCE, IS_BURNED);
     }
 
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
-        this.onBlockAddedKindling(state, level, pos, oldState, isMoving);
+        this.onPlaceKindling(state, level, pos, oldState, isMoving);
         super.onPlace(state, level, pos, oldState, isMoving);
     }
 
