@@ -1,0 +1,37 @@
+{
+  "replace": false,
+  "values": [
+    "bayou_blues:cypress_log",
+    "bayou_blues:stripped_cypress_log",
+    "bayou_blues:cypress_wood",
+    "bayou_blues:stripped_cypress_wood",
+    "bayou_blues:cypress_planks",
+    "bayou_blues:cypress_slab",
+    "bayou_blues:cypress_stairs",
+    "bayou_blues:cypress_pressure_plate",
+    "bayou_blues:cypress_button",
+    "bayou_blues:cypress_fence",
+    "bayou_blues:cypress_fence_gate",
+    "bayou_blues:cypress_door",
+    "bayou_blues:cypress_trapdoor",
+    "bayou_blues:cypress_sign",
+    "bayou_blues:cypress_wall_sign",
+    "bayou_blues:cypress_knee",
+    "bayou_blues:large_cypress_knee",
+    "bayou_blues:stripped_cypress_knee",
+    "bayou_blues:stripped_large_cypress_knee",
+    "bayou_blues:cypress_branch",
+    "bayou_blues:cypress_bookshelf",
+    "bayou_blues:vertical_cypress_planks",
+    "bayou_blues:cypress_vertical_slab",
+    "bayou_blues:cypress_ladder",
+    "bayou_blues:cypress_post",
+    "bayou_blues:stripped_cypress_post",
+    "bayou_blues:cypress_chest",
+    "bayou_blues:cypress_trapped_chest",
+    {
+      "id": "bayou_blues:cypress_beehive",
+      "required": false
+    }
+  ]
+}

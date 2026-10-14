@@ -1,1 +1,5 @@
-{"textures": {"particle": "bayou_blues:block/cypress_planks"}}
+{
+  "textures": {
+    "particle": "bayou_blues:block/cypress_planks"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "bayou_blues:cypress_leaves",
+    "bayou_blues:hanging_cypress_leaves",
+    "bayou_blues:cypress_leaf_carpet",
+    "bayou_blues:cypress_hedge",
+    "bayou_blues:algae_thatch",
+    "bayou_blues:algae_thatch_slab",
+    "bayou_blues:algae_thatch_stairs",
+    "bayou_blues:algae_thatch_vertical_slab",
+    "bayou_blues:beard_moss_block",
+    "bayou_blues:gooseberry_sack",
+    "bayou_blues:kindling",
+    "bayou_blues:kindling_slab",
+    "bayou_blues:kindling_stairs",
+    "bayou_blues:kindling_vertical_slab"
+  ]
+}
