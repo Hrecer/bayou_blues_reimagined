@@ -1,0 +1,100 @@
+{
+  "_comment": "Cypress",
+  "block.bayou_blues.stripped_cypress_log": "Kuorittu sypressihalko",
+  "block.bayou_blues.cypress_log": "Sypressihalko",
+  "block.bayou_blues.stripped_cypress_wood": "Kuorittu sypressipuu",
+  "block.bayou_blues.cypress_wood": "Sypressipuu",
+  "block.bayou_blues.cypress_planks": "Sypressilankut",
+  "block.bayou_blues.cypress_slab": "Sypressilaatta",
+  "block.bayou_blues.cypress_stairs": "Sypressiportaat",
+  "block.bayou_blues.cypress_pressure_plate": "Sypressipainelaatta",
+  "block.bayou_blues.cypress_fence": "Sypressiaita",
+  "block.bayou_blues.cypress_fence_gate": "Sypressiportti",
+  "block.bayou_blues.cypress_button": "Sypressinappi",
+  "block.bayou_blues.cypress_trapdoor": "Sypressiluukku",
+  "block.bayou_blues.cypress_door": "Sypressiovi",
+  "block.bayou_blues.cypress_sign": "Sypressikyltti",
+  "block.bayou_blues.cypress_leaves": "Sypressinlehdet",
+  "block.bayou_blues.cypress_sapling": "Sypressin taimi",
+  "block.bayou_blues.cypress_leaf_carpet": "Sypressinlehtimatto",
+  "block.bayou_blues.cypress_bookshelf": "Sypressikirjahylly",
+  "block.bayou_blues.cypress_chest": "Sypressiarkku",
+  "block.bayou_blues.cypress_trapped_chest": "Ansoitettu sypressiarkku",
+  "block.bayou_blues.cypress_ladder": "Sypressitikas",
+  "block.bayou_blues.cypress_vertical_slab": "Pystysuora sypressilaatta",
+  "block.bayou_blues.vertical_cypress_planks": "Kohtisuorat sypressilankut",
+  "block.bayou_blues.cypress_hedge": "Sypressipensasaita",
+  "block.bayou_blues.cypress_post": "Sypressitolppa",
+  "block.bayou_blues.stripped_cypress_post": "Kuorittu sypressitolppa",
+  "block.bayou_blues.cypress_beehive": "Sypressimehiläispesä",
+  "block.bayou_blues.potted_cypress_sapling": "Istutettu sypressin taimi",
+
+  "item.bayou_blues.cypress_boat": "Sypressivene",
+
+  "block.bayou_blues.hanging_cypress_leaves": "Roikkuvat sypressinlehdet",
+
+  "block.bayou_blues.cypress_knee": "Sypressipolvi",
+  "block.bayou_blues.large_cypress_knee": "Suuri sypressipolvi",
+
+
+  "_comment1": "Gooseberries",
+  "item.bayou_blues.gooseberries": "Karviaiset",
+  "item.bayou_blues.gooseberry_juice": "Karviaismehu",
+  "item.bayou_blues.gooseberry_pie": "Karviaispiirakka",
+
+  "block.bayou_blues.cypress_branch": "Sypressin oksa",
+  "block.bayou_blues.gooseberry_sack": "Säkki karviaisia",
+
+  "item.bayou_blues.honey_glazed_gooseberries": "Hunajakarviaiset",
+  "item.bayou_blues.gooseberry_jam": "Karviaishillopullo",
+  "item.bayou_blues.gooseberry_jam_cookie": "Karviaishillokeksi",
+
+
+  "_comment2": "Biome & Slabfish",
+  "biome.bayou_blues.bayou": "Lutakko",
+  "biome.bayou_blues.bayou_hills": "Lutakkokukkulat",
+
+  "entity.bayou_blues.slabfish.type.bayou": "Lutakko",
+
+
+  "_comment3": "Lily Flowers",
+  "block.bayou_blues.blue_lily": "Sininen lumme",
+  "block.bayou_blues.light_gray_lily": "Vaaleanharmaa lumme",
+  "block.bayou_blues.cyan_lily": "Syaani lumme",
+  "block.bayou_blues.light_blue_lily": "Vaaleansininen lumme",
+  "block.bayou_blues.magenta_lily": "Purppura lumme",
+  "block.bayou_blues.pink_lily": "Vaaleanpunainen lumme",
+  "block.bayou_blues.purple_lily": "Violetti lumme",
+  "block.bayou_blues.white_lily": "Valkoinen lumme",
+
+  "block.bayou_blues.potted_blue_lily": "Istutettu sininen lumme",
+  "block.bayou_blues.potted_light_gray_lily": "Istutettu vaaleanharmaa lumme",
+  "block.bayou_blues.potted_cyan_lily": "Istutettu syaani lumme",
+  "block.bayou_blues.potted_light_blue_lily": "Istutettu vaaleansininen lumme",
+  "block.bayou_blues.potted_magenta_lily": "Istutettu purppura lumme",
+  "block.bayou_blues.potted_pink_lily": "Istutettu vaaleanpunainen lumme",
+  "block.bayou_blues.potted_purple_lily": "Istutettu violetti lumme",
+  "block.bayou_blues.potted_white_lily": "Istutettu valkoinen lumme",
+
+  "item.bayou_blues.blue_lily": "Sininen lumme",
+  "item.bayou_blues.light_gray_lily": "Vaaleanharmaa lumme",
+  "item.bayou_blues.cyan_lily": "Syaani lumme",
+  "item.bayou_blues.light_blue_lily": "Vaaleansininen lumme",
+  "item.bayou_blues.magenta_lily": "Purppura lumme",
+  "item.bayou_blues.pink_lily": "Vaaleanpunainen lumme",
+  "item.bayou_blues.purple_lily": "Violetti lumme",
+  "item.bayou_blues.white_lily": "Valkoinen lumme",
+
+
+  "_comment4": "Other Vegetation",
+  "block.bayou_blues.algae": "Levä",
+  "block.bayou_blues.algae_thatch": "Leväkuutio",
+  "block.bayou_blues.algae_thatch_slab": "Levälaatta",
+  "block.bayou_blues.algae_thatch_stairs": "Leväportaat",
+  "block.bayou_blues.algae_thatch_vertical_slab": "Pystysuora levälaatta",
+
+  "block.bayou_blues.beard_moss_block": "Naavakuutio",
+  "block.bayou_blues.beard_moss": "Naava",
+
+  "block.bayou_blues.giant_fern": "Jättiläissaniainen"
+}

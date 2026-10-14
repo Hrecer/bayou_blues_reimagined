@@ -84,8 +84,9 @@ public class CypressBranchBlock extends Block implements BonemealableBlock {
     public void randomTick(BlockState state, ServerLevel worldIn, BlockPos pos, RandomSource random) {
         int j = state.getValue(AGE);
 
-        if (j < 2 && random.nextInt(10) == 0) {
+        if (j < 2 && net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, random.nextInt(10) == 0)) {
             worldIn.setBlock(pos, state.setValue(AGE, j+1), 2);
+            net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state);
         }
     }
 
@@ -126,7 +127,7 @@ public class CypressBranchBlock extends Block implements BonemealableBlock {
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         if (!context.replacingClickedOnBlock()) {
-            BlockState blockstate = context.getLevel().getBlockState(context.getClickedPos().offset(context.getClickedFace().getNormal()));
+            BlockState blockstate = context.getLevel().getBlockState(context.getClickedPos().relative(context.getClickedFace().getOpposite()));
             if (blockstate.is(this) && blockstate.getValue(FACING) == context.getClickedFace()) {
                 return null;
             }

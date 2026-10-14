@@ -45,11 +45,12 @@ public final class BayouBluesBlocksBadlands {
 
     private BayouBluesBlocksBadlands() {}
 
+    /** BBB 原版引火物取自干草块属性：0.5 硬度、草音效、黄色地图色。 */
     private static BlockBehaviour.Properties kindlingProperties() {
         return BlockBehaviour.Properties.copy(Blocks.SCAFFOLDING)
                 .mapColor(MapColor.COLOR_YELLOW)
                 .strength(0.5F)
-                .sound(SoundType.SCAFFOLDING)
+                .sound(SoundType.GRASS)
                 .noOcclusion()
                 .noCollission();
     }

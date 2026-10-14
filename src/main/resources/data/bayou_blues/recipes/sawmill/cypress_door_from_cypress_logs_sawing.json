@@ -1,0 +1,25 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "type": "forge:mod_loaded",
+          "modid": "woodworks"
+        },
+        {
+          "type": "woodworks:config",
+          "value": "sawmill"
+        }
+      ],
+      "recipe": {
+        "type": "woodworks:sawmill",
+        "count": 2,
+        "ingredient": {
+          "tag": "bayou_blues:cypress_logs"
+        },
+        "result": "bayou_blues:cypress_door"
+      }
+    }
+  ]
+}

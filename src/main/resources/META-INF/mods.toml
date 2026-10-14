@@ -65,6 +65,16 @@ versionRange = "[4.0,)"
 ordering = "AFTER"
 side = "BOTH"
 
+# 1.16.5 原版的锯木台（sawing）兼容在 1.18+ 由 Woodworks 提供：
+# 移植配方见 data/bayou_blues/recipes/sawmill/（forge:conditional + woodworks:sawmill，
+# mod_loaded 在前短路，未装 Woodworks 时零影响）。
+[[dependencies.bayou_blues]]
+modId = "woodworks"
+mandatory = false
+versionRange = "[3.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
 # ── 关于 Blueprint（Team Abnormals 前置库）─────────────────────────────────────────────────
 # 历史上 Better Badlands 1.16.5 强依赖 abnormals_core；该库在 1.18+ 更名为 Blueprint。
 # 本次移植【没有】把它作为依赖引入：AbnormalsCore 提供的那几个类在本模组里都有等价实现——

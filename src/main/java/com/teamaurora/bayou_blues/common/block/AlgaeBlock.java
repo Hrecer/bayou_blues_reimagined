@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
@@ -41,7 +40,7 @@ public class AlgaeBlock extends BushBlock implements BonemealableBlock {
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         FluidState fluidstate = worldIn.getFluidState(pos.below());
         FluidState fluidstate1 = worldIn.getFluidState(pos);
-        return (fluidstate.getType() == Fluids.WATER || worldIn.getBlockState(pos.below()).getMapColor(worldIn, pos.below()) == MapColor.ICE) && fluidstate1.getType() == Fluids.EMPTY;
+        return fluidstate.getType() == Fluids.WATER && fluidstate1.getType() == Fluids.EMPTY;
     }
 
     @Override

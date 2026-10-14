@@ -86,6 +86,7 @@ public class BayouBluesTabs {
         acceptBlock(output, BayouBluesBlocks.CYPRESS_SAPLING);
         acceptBlock(output, BayouBluesBlocks.HANGING_CYPRESS_LEAVES);
         acceptBlock(output, BayouBluesBlocks.CYPRESS_LEAF_CARPET);
+        acceptBlock(output, BayouBluesBlocks.CYPRESS_HEDGE);
         acceptBlock(output, BayouBluesBlocks.CYPRESS_KNEE);
         acceptBlock(output, BayouBluesBlocks.LARGE_CYPRESS_KNEE);
         acceptBlock(output, BayouBluesBlocks.STRIPPED_CYPRESS_KNEE);

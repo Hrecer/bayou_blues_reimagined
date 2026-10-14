@@ -25,10 +25,10 @@ public class BayouBluesBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, BayouBlues.MOD_ID);
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, BayouBlues.MOD_ID);
 
-    public static final RegistryObject<Block> STRIPPED_CYPRESS_LOG = createBlock("stripped_cypress_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).mapColor(MapColor.WOOD)));
-    public static final RegistryObject<Block> STRIPPED_CYPRESS_WOOD = createBlock("stripped_cypress_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).mapColor(MapColor.WOOD)));
-    public static final RegistryObject<Block> CYPRESS_LOG = createBlock("cypress_log", () -> new BBBlocks.LogBlock(() -> STRIPPED_CYPRESS_LOG.get(), BlockBehaviour.Properties.copy(Blocks.OAK_LOG).mapColor(s -> MapColor.WOOD)));
-    public static final RegistryObject<Block> CYPRESS_WOOD = createBlock("cypress_wood", () -> new BBBlocks.WoodBlock(() -> STRIPPED_CYPRESS_WOOD.get(), BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).mapColor(s -> MapColor.WOOD)));
+    public static final RegistryObject<Block> STRIPPED_CYPRESS_LOG = createBlock("stripped_cypress_log", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG).mapColor(MapColor.COLOR_BROWN)));
+    public static final RegistryObject<Block> STRIPPED_CYPRESS_WOOD = createBlock("stripped_cypress_wood", () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD).mapColor(MapColor.COLOR_BROWN)));
+    public static final RegistryObject<Block> CYPRESS_LOG = createBlock("cypress_log", () -> new BBBlocks.LogBlock(() -> STRIPPED_CYPRESS_LOG.get(), BlockBehaviour.Properties.copy(Blocks.OAK_LOG).mapColor(MapColor.COLOR_BROWN)));
+    public static final RegistryObject<Block> CYPRESS_WOOD = createBlock("cypress_wood", () -> new BBBlocks.WoodBlock(() -> STRIPPED_CYPRESS_WOOD.get(), BlockBehaviour.Properties.copy(Blocks.OAK_WOOD).mapColor(MapColor.COLOR_BROWN)));
     public static final RegistryObject<Block> CYPRESS_PLANKS = createBlock("cypress_planks", () -> new Block(BlockBehaviour.Properties.copy(Blocks.OAK_PLANKS).mapColor(MapColor.WOOD)));
     public static final RegistryObject<Block> CYPRESS_SLAB = createBlock("cypress_slab", () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.OAK_SLAB)));
     public static final RegistryObject<Block> CYPRESS_STAIRS = createBlock("cypress_stairs", () -> new StairBlock(CYPRESS_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(Blocks.OAK_STAIRS)));
@@ -46,11 +46,11 @@ public class BayouBluesBlocks {
     public static final RegistryObject<Block> CYPRESS_LEAF_CARPET = createBlock("cypress_leaf_carpet", () -> new LeafCarpetBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistryObject<Block> HANGING_CYPRESS_LEAVES = createBlock("hanging_cypress_leaves", () -> new HangingCypressLeavesBlock(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
 
-    public static final RegistryObject<Block> STRIPPED_CYPRESS_KNEE = createBlock("stripped_cypress_knee", () -> new CypressKneeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
-    public static final RegistryObject<Block> STRIPPED_LARGE_CYPRESS_KNEE = createBlock("stripped_large_cypress_knee", () -> new DoubleCypressKneeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
-    public static final RegistryObject<Block> CYPRESS_KNEE = createBlock("cypress_knee", () -> new CypressKneeBlock(STRIPPED_CYPRESS_KNEE, BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
-    public static final RegistryObject<Block> LARGE_CYPRESS_KNEE = createBlock("large_cypress_knee", () -> new DoubleCypressKneeBlock(STRIPPED_LARGE_CYPRESS_KNEE, BlockBehaviour.Properties.of().mapColor(MapColor.WOOD).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
-    public static final RegistryObject<Block> CYPRESS_BRANCH = createBlock("cypress_branch", () -> new CypressBranchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).instabreak().noCollission().sound(SoundType.SWEET_BERRY_BUSH)));
+    public static final RegistryObject<Block> STRIPPED_CYPRESS_KNEE = createBlock("stripped_cypress_knee", () -> new CypressKneeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
+    public static final RegistryObject<Block> STRIPPED_LARGE_CYPRESS_KNEE = createBlock("stripped_large_cypress_knee", () -> new DoubleCypressKneeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
+    public static final RegistryObject<Block> CYPRESS_KNEE = createBlock("cypress_knee", () -> new CypressKneeBlock(STRIPPED_CYPRESS_KNEE, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
+    public static final RegistryObject<Block> LARGE_CYPRESS_KNEE = createBlock("large_cypress_knee", () -> new DoubleCypressKneeBlock(STRIPPED_LARGE_CYPRESS_KNEE, BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_BROWN).strength(2.0F).sound(SoundType.WOOD).noOcclusion()));
+    public static final RegistryObject<Block> CYPRESS_BRANCH = createBlock("cypress_branch", () -> new CypressBranchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).instabreak().noCollission().randomTicks().sound(SoundType.BAMBOO_SAPLING)));
 
     // 睡莲有可站立的碰撞箱，属性必须来自 LILY_PAD（原版同款）。若换成带 offsetType 的
     // 花方块属性（如 LILY_OF_THE_VALLEY），1.20.1 会以 "has a collision shape and an
@@ -74,9 +74,9 @@ public class BayouBluesBlocks {
     public static final RegistryObject<Block> POTTED_WHITE_LILY = createBlockNoItem("potted_white_lily", () -> new FlowerPotBlock(WHITE_LILY.get(), BlockBehaviour.Properties.copy(Blocks.POTTED_LILY_OF_THE_VALLEY)));
 
     public static final RegistryObject<Block> ALGAE = createBlockNoItem("algae", () -> new AlgaeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).instabreak().sound(SoundType.LILY_PAD).noOcclusion().noCollission()));
-    public static final RegistryObject<Block> ALGAE_THATCH = createBlock("algae_thatch", () -> new BBBlocks.ThatchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.SCAFFOLDING).noOcclusion()));
-    public static final RegistryObject<Block> ALGAE_THATCH_SLAB = createBlock("algae_thatch_slab", () -> new BBBlocks.ThatchSlabBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.SCAFFOLDING).noOcclusion()));
-    public static final RegistryObject<Block> ALGAE_THATCH_STAIRS = createBlock("algae_thatch_stairs", () -> new BBBlocks.ThatchStairBlock(ALGAE_THATCH.get().defaultBlockState(), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_YELLOW).strength(0.5F).sound(SoundType.SCAFFOLDING).noOcclusion()));
+    public static final RegistryObject<Block> ALGAE_THATCH = createBlock("algae_thatch", () -> new BBBlocks.ThatchBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).strength(0.5F).sound(SoundType.GRASS).noOcclusion()));
+    public static final RegistryObject<Block> ALGAE_THATCH_SLAB = createBlock("algae_thatch_slab", () -> new BBBlocks.ThatchSlabBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).strength(0.5F).sound(SoundType.GRASS).noOcclusion()));
+    public static final RegistryObject<Block> ALGAE_THATCH_STAIRS = createBlock("algae_thatch_stairs", () -> new BBBlocks.ThatchStairBlock(ALGAE_THATCH.get().defaultBlockState(), BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_LIGHT_GREEN).strength(0.5F).sound(SoundType.GRASS).noOcclusion()));
     public static final RegistryObject<Block> BEARD_MOSS = createFuelBlock("beard_moss", () -> new BeardMossBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).sound(SoundType.MOSS).noOcclusion().noCollission().instabreak()), 800);
     public static final RegistryObject<Block> BEARD_MOSS_BLOCK = createFuelBlock("beard_moss_block", () -> new BeardMossBlockBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.1F).sound(SoundType.MOSS).noOcclusion()), 800);
     public static final RegistryObject<Block> GIANT_FERN = createBlock("giant_fern", () -> new DoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.LARGE_FERN)));
