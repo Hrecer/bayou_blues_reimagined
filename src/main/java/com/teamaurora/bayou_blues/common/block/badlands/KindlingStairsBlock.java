@@ -47,6 +47,12 @@ public class KindlingStairsBlock extends BBBlocks.ThatchStairBlock implements IK
     }
 
     @Override
+    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
+        this.animateTickKindling(state, level, pos, rand);
+        super.animateTick(state, level, pos, rand);
+    }
+
+    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         super.createBlockStateDefinition(builder);
         builder.add(BURN_DISTANCE, IS_BURNED);

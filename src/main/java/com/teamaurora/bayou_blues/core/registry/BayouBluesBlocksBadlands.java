@@ -54,8 +54,9 @@ public final class BayouBluesBlocksBadlands {
                 .noCollission();
     }
 
+    /** 灯自身不发光（原版一致）；亮度由正面自动放置的隐形光源方块提供。 */
     private static BlockBehaviour.Properties lampProperties() {
-        return BlockBehaviour.Properties.copy(Blocks.TERRACOTTA).lightLevel(s -> 15);
+        return BlockBehaviour.Properties.copy(Blocks.TERRACOTTA);
     }
 
     public static void bootstrap() {}

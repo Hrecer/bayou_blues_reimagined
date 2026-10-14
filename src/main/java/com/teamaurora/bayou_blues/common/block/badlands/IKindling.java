@@ -116,4 +116,28 @@ public interface IKindling {
             }
         }
     }
+
+    /** 客户端每帧：阴燃时冒出火焰与烟，并偶尔播放火焰环境音。 */
+    default void animateTickKindling(BlockState state, Level level, BlockPos pos, RandomSource rand) {
+        if (state.getValue(BURN_DISTANCE) > 0) {
+            for (int i = 0; i < 20; ++i) {
+                double x = pos.getX() + rand.nextDouble() + rand.nextDouble() / 6.0;
+                double y = pos.getY() + rand.nextDouble() + rand.nextDouble() / 6.0;
+                double z = pos.getZ() + rand.nextDouble() + rand.nextDouble() / 6.0;
+                level.addParticle(ParticleTypes.FLAME, x, y, z, 0.0, 0.0, 0.0);
+            }
+            int smokeCount = rand.nextInt(35) + 5;
+            for (int i = 0; i < smokeCount; ++i) {
+                double x = pos.getX() + rand.nextDouble() + rand.nextDouble() / 6.0;
+                double y = pos.getY() + rand.nextDouble() + rand.nextDouble() / 6.0;
+                double z = pos.getZ() + rand.nextDouble() + rand.nextDouble() / 6.0;
+                level.addParticle(ParticleTypes.SMOKE, x, y, z, 0.0, 0.0, 0.0);
+            }
+            if (rand.nextInt(64) == 0) {
+                level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        SoundEvents.FIRE_AMBIENT, SoundSource.BLOCKS,
+                        rand.nextFloat() * 0.25F + 0.75F, rand.nextFloat() + 0.5F, false);
+            }
+        }
+    }
 }
