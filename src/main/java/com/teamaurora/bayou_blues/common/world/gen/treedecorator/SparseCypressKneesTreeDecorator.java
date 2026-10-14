@@ -6,15 +6,16 @@ import com.teamaurora.bayou_blues.common.block.DoubleCypressKneeBlock;
 import com.teamaurora.bayou_blues.core.registry.BayouBluesBlocks;
 import com.teamaurora.bayou_blues.core.registry.BayouBluesFeatures;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecorator;
 import net.minecraft.world.level.levelgen.feature.treedecorators.TreeDecoratorType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SparseCypressKneesTreeDecorator extends TreeDecorator {
@@ -33,53 +34,56 @@ public class SparseCypressKneesTreeDecorator extends TreeDecorator {
         List<BlockPos> logs = context.logs();
         if (logs.isEmpty()) return;
 
-        int minY = logs.get(0).getY();
+        // 膝根基准高度：默认树干最低一格；若树干触水则抬到"邻水最高的那格"（水线）。
+        // 水里的丝柏因此会在水面高度围一圈膝根：大膝根下段没入水中、上段露出水面。
+        int minY = Integer.MAX_VALUE;
+        int maxWaterY = 0;
         for (BlockPos pos : logs) {
             if (pos.getY() < minY) {
                 minY = pos.getY();
             }
-        }
-
-        List<BlockPos> lowestLogs = new ArrayList<>();
-        for (BlockPos pos : logs) {
-            if (pos.getY() == minY) {
-                lowestLogs.add(pos);
+            if (pos.getY() > maxWaterY) {
+                for (Direction dir : Direction.Plane.HORIZONTAL) {
+                    if (isWater(level, pos.relative(dir))) {
+                        maxWaterY = pos.getY();
+                    }
+                }
             }
         }
-
-        int avgX = 0;
-        int avgZ = 0;
-        for (BlockPos pos : lowestLogs) {
-            avgX += pos.getX();
-            avgZ += pos.getZ();
+        if (maxWaterY > minY) {
+            minY = maxWaterY;
         }
-        avgX /= lowestLogs.size();
-        avgZ /= lowestLogs.size();
 
-        BlockPos center = new BlockPos(avgX, minY, avgZ);
-        for (int x = -3; x <= 3; x++) {
-            for (int z = -3; z <= 3; z++) {
-                if (Math.abs(x) + Math.abs(z) <= 4 && (x != 0 || z != 0)) {
-                    BlockPos checkPos = center.offset(x, 0, z);
-                    for (int y = -2; y <= 1; y++) {
-                        BlockPos target = checkPos.above(y);
-                        if (isValidGround(level, target.below()) && isAirOrWater(level, target)) {
-                            boolean waterBelow = isWater(level, target);
-                            if (rand.nextInt(10) == 0) {
-                                if (rand.nextInt(3) == 0 && isAirOrWater(level, target.above())) {
-                                    boolean waterAbove = isWater(level, target.above());
-                                    context.setBlock(target, BayouBluesBlocks.LARGE_CYPRESS_KNEE.get().defaultBlockState()
-                                            .setValue(DoubleCypressKneeBlock.HALF, DoubleBlockHalf.LOWER)
-                                            .setValue(DoubleCypressKneeBlock.WATERLOGGED, waterBelow));
-                                    context.setBlock(target.above(), BayouBluesBlocks.LARGE_CYPRESS_KNEE.get().defaultBlockState()
-                                            .setValue(DoubleCypressKneeBlock.HALF, DoubleBlockHalf.UPPER)
-                                            .setValue(DoubleCypressKneeBlock.WATERLOGGED, waterAbove));
-                                } else {
-                                    context.setBlock(target, BayouBluesBlocks.CYPRESS_KNEE.get().defaultBlockState()
-                                            .setValue(CypressKneeBlock.WATERLOGGED, waterBelow));
-                                }
+        for (BlockPos pos : logs) {
+            if (pos.getY() != minY) continue;
+            if (rand.nextInt(6) != 0) continue;
+            placeKneesAround(context, level, rand, pos);
+        }
+    }
+
+    private void placeKneesAround(Context context, LevelSimulatedReader level, RandomSource rand, BlockPos pos) {
+        for (int x = -2; x <= 2; x++) {
+            for (int y = -2; y <= 2; y++) {
+                for (int z = -2; z <= 2; z++) {
+                    BlockPos target = pos.offset(x, y, z);
+                    if (pos.distSqr(target) >= 9.0D) continue;
+                    if (isGrass(level, target.below()) && isAir(level, target)) {
+                        if (rand.nextInt(9) == 0) {
+                            if (rand.nextInt(3) == 0 && isAir(level, target.above())) {
+                                placeLargeKnee(context, level, target);
+                            } else {
+                                context.setBlock(target, BayouBluesBlocks.CYPRESS_KNEE.get().defaultBlockState()
+                                        .setValue(CypressKneeBlock.WATERLOGGED, false));
                             }
-                            break;
+                        }
+                    } else if (isWater(level, target) && isSolid(level, target.below())) {
+                        if (rand.nextInt(8) == 0) {
+                            if (rand.nextInt(4) != 0 && isAir(level, target.above())) {
+                                placeLargeKnee(context, level, target);
+                            } else {
+                                context.setBlock(target, BayouBluesBlocks.CYPRESS_KNEE.get().defaultBlockState()
+                                        .setValue(CypressKneeBlock.WATERLOGGED, true));
+                            }
                         }
                     }
                 }
@@ -87,17 +91,28 @@ public class SparseCypressKneesTreeDecorator extends TreeDecorator {
         }
     }
 
-    private static boolean isValidGround(LevelSimulatedReader level, BlockPos pos) {
-        return level.isStateAtPosition(pos, state ->
-                state.is(Blocks.GRASS_BLOCK) || state.is(Blocks.DIRT) || state.is(Blocks.COARSE_DIRT)
-                        || state.is(Blocks.PODZOL) || state.is(Blocks.CLAY) || state.is(Blocks.GRAVEL) || state.is(Blocks.SAND));
+    private static void placeLargeKnee(Context context, LevelSimulatedReader level, BlockPos pos) {
+        context.setBlock(pos, BayouBluesBlocks.LARGE_CYPRESS_KNEE.get().defaultBlockState()
+                .setValue(DoubleCypressKneeBlock.HALF, DoubleBlockHalf.LOWER)
+                .setValue(DoubleCypressKneeBlock.WATERLOGGED, isWater(level, pos)));
+        context.setBlock(pos.above(), BayouBluesBlocks.LARGE_CYPRESS_KNEE.get().defaultBlockState()
+                .setValue(DoubleCypressKneeBlock.HALF, DoubleBlockHalf.UPPER)
+                .setValue(DoubleCypressKneeBlock.WATERLOGGED, isWater(level, pos.above())));
     }
 
-    private static boolean isAirOrWater(LevelSimulatedReader level, BlockPos pos) {
-        return level.isStateAtPosition(pos, state -> state.isAir() || state.getFluidState().is(FluidTags.WATER));
+    private static boolean isGrass(LevelSimulatedReader level, BlockPos pos) {
+        return level.isStateAtPosition(pos, state -> state.is(Blocks.GRASS_BLOCK));
+    }
+
+    private static boolean isAir(LevelSimulatedReader level, BlockPos pos) {
+        return level.isStateAtPosition(pos, BlockState::isAir);
     }
 
     private static boolean isWater(LevelSimulatedReader level, BlockPos pos) {
         return level.isStateAtPosition(pos, state -> state.getFluidState().is(FluidTags.WATER));
+    }
+
+    private static boolean isSolid(LevelSimulatedReader level, BlockPos pos) {
+        return level.isStateAtPosition(pos, BlockState::isSolid);
     }
 }
