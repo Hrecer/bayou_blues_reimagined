@@ -34,7 +34,7 @@ public class KindlingSlabBlock extends BBBlocks.ThatchSlabBlock implements IKind
 
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult hit, Projectile projectile) {
-        this.onProjectileCollisionKindling(level, state, hit, projectile);
+        this.onProjectileHitKindling(level, state, hit, projectile);
         super.onProjectileHit(level, state, hit, projectile);
     }
 
@@ -44,20 +44,14 @@ public class KindlingSlabBlock extends BBBlocks.ThatchSlabBlock implements IKind
     }
 
     @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rand) {
-        this.animateTickKindling(state, level, pos, rand);
-        super.animateTick(state, level, pos, rand);
-    }
-
-    @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        this.addKindlingProperties(builder)
-                .add(BlockStateProperties.SLAB_TYPE, BlockStateProperties.WATERLOGGED);
+        super.createBlockStateDefinition(builder);
+        builder.add(BURN_DISTANCE, IS_BURNED);
     }
 
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean isMoving) {
-        this.onBlockAddedKindling(state, level, pos, oldState, isMoving);
+        this.onPlaceKindling(state, level, pos, oldState, isMoving);
         super.onPlace(state, level, pos, oldState, isMoving);
     }
 
