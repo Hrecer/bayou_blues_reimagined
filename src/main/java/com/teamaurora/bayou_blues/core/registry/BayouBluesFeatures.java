@@ -54,12 +54,14 @@ public class BayouBluesFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> CYPRESS_GROWN = createConfiguredKey("cypress_grown");
     public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_CYPRESS_GROWN = createConfiguredKey("mega_cypress_grown");
     public static final ResourceKey<ConfiguredFeature<?, ?>> SAGUARO_CACTUS_KEY = createConfiguredKey("saguaro_cactus");
+    public static final ResourceKey<ConfiguredFeature<?, ?>> SMALL_DARK_OAK_KEY = createConfiguredKey("small_dark_oak_tree");
 
     // Configured inner class for easy access from CypressTree
     public static final class Configured {
         public static final ResourceKey<ConfiguredFeature<?, ?>> CYPRESS_GROWN = BayouBluesFeatures.CYPRESS_GROWN;
         public static final ResourceKey<ConfiguredFeature<?, ?>> MEGA_CYPRESS_GROWN = BayouBluesFeatures.MEGA_CYPRESS_GROWN;
         public static final ResourceKey<ConfiguredFeature<?, ?>> SAGUARO_CACTUS = BayouBluesFeatures.SAGUARO_CACTUS_KEY;
+        public static final ResourceKey<ConfiguredFeature<?, ?>> SMALL_DARK_OAK = BayouBluesFeatures.SMALL_DARK_OAK_KEY;
     }
 
     private static ResourceKey<ConfiguredFeature<?, ?>> createConfiguredKey(String name) {

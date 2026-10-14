@@ -3,12 +3,16 @@ package com.teamaurora.bayou_blues.core.other;
 import com.teamaurora.bayou_blues.common.block.LilyFlowerBlock;
 import com.teamaurora.bayou_blues.core.BayouBluesConfig;
 import com.teamaurora.bayou_blues.core.registry.BayouBluesBlocks;
+import com.teamaurora.bayou_blues.core.registry.BayouBluesEffects;
 import com.teamaurora.bayou_blues.core.registry.BayouBluesItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.ItemStack;
@@ -48,6 +52,19 @@ public class BayouBluesEvents {
                 // Landing on cypress knees doubles the incoming generic damage.
                 event.getEntity().hurt(level.damageSources().generic(), event.getAmount() * 2.0F);
             }
+        }
+    }
+
+    /**
+     * 衰亡（BBB 移植）：带衰亡效果的生物受非魔法伤害时，被附加 5~N 秒剧毒
+     * （100 + 25×等级 tick，隐藏粒子与图标）。对应 BBB 的 {@code onLivingEntityDamage}。
+     */
+    @SubscribeEvent
+    public static void onLivingDamageSuccumbing(LivingDamageEvent event) {
+        LivingEntity entity = event.getEntity();
+        MobEffectInstance instance = entity.getEffect(BayouBluesEffects.SUCCUMBING.get());
+        if (instance != null && !event.getSource().is(DamageTypes.MAGIC)) {
+            entity.addEffect(new MobEffectInstance(MobEffects.POISON, 100 + 25 * instance.getAmplifier(), 0, false, false, false));
         }
     }
 

@@ -64,6 +64,7 @@ public class BayouBlues {
         event.enqueueWork(() -> {
             BayouBluesCompat.registerCompostables();
             BayouBluesCompat.registerFlammables();
+            BayouBluesCompat.replaceDarkOakGrower();
             BayouBluesBlocks.registerFlowerPots();
             BayouBluesEffects.registerBrewingRecipes();
             DispenserBlock.registerBehavior(BayouBluesItems.CYPRESS_BOAT.get(), new CypressBoatDispenseBehavior());

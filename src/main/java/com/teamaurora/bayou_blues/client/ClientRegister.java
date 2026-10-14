@@ -150,9 +150,12 @@ public class ClientRegister {
         ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocks.POTTED_PURPLE_LILY.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocks.POTTED_WHITE_LILY.get(), RenderType.cutout());
         ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocks.GIANT_FERN.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.KINDLING.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.KINDLING_SLAB.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.KINDLING_STAIRS.get(), RenderType.cutout());
-        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.KINDLING_VERTICAL_SLAB.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.KINDLING.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.KINDLING_SLAB.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.KINDLING_STAIRS.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.KINDLING_VERTICAL_SLAB.get(), RenderType.cutoutMipped());
+        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.SAGUARO_SPROUT.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.POTTED_SAGUARO_SPROUT.get(), RenderType.cutout());
+        ItemBlockRenderTypes.setRenderLayer(BayouBluesBlocksBadlands.SAGUARO_FLOWER.get(), RenderType.cutout());
     }
 }

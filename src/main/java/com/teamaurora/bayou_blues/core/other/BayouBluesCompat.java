@@ -1,9 +1,16 @@
 package com.teamaurora.bayou_blues.core.other;
 
+import com.teamaurora.bayou_blues.common.block.trees.SmallDarkOakTreeGrower;
+import com.teamaurora.bayou_blues.core.BayouBlues;
 import com.teamaurora.bayou_blues.core.registry.BayouBluesBlocks;
 import com.teamaurora.bayou_blues.core.registry.BayouBluesBlocksBadlands;
 import com.teamaurora.bayou_blues.core.registry.BayouBluesItems;
 import com.teamaurora.bayou_blues.core.util.ModUtil;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SaplingBlock;
+import net.minecraft.world.level.block.grower.AbstractTreeGrower;
+
+import java.lang.reflect.Field;
 
 public class BayouBluesCompat {
     public static void registerCompostables() {
@@ -36,6 +43,28 @@ public class BayouBluesCompat {
         ModUtil.registerCompostable(BayouBluesBlocksBadlands.KINDLING_SLAB.get(), 0.3F);
         ModUtil.registerCompostable(BayouBluesBlocksBadlands.KINDLING_STAIRS.get(), 0.3F);
         ModUtil.registerCompostable(BayouBluesBlocksBadlands.KINDLING_VERTICAL_SLAB.get(), 0.3F);
+        ModUtil.registerCompostable(BayouBluesBlocksBadlands.SAGUARO_CACTUS.get(), 0.5F);
+        ModUtil.registerCompostable(BayouBluesBlocksBadlands.SMALL_SAGUARO_CACTUS.get(), 0.5F);
+        ModUtil.registerCompostable(BayouBluesItems.SAGUARO_FLOWER.get(), 0.5F);
+    }
+
+    /**
+     * 替换原版深色橡木树苗的 TreeGrower（见 {@link SmallDarkOakTreeGrower} 的类注释）：
+     * 1.20.1 对单个树苗不会触发 SaplingGrowTreeEvent，只能从 grower 源头接管。
+     */
+    public static void replaceDarkOakGrower() {
+        try {
+            for (Field field : SaplingBlock.class.getDeclaredFields()) {
+                if (AbstractTreeGrower.class.isAssignableFrom(field.getType())) {
+                    field.setAccessible(true);
+                    field.set(Blocks.DARK_OAK_SAPLING, new SmallDarkOakTreeGrower());
+                    return;
+                }
+            }
+            BayouBlues.LOGGER.error("No AbstractTreeGrower field found on SaplingBlock; small dark oaks will not grow from single saplings");
+        } catch (Throwable t) {
+            BayouBlues.LOGGER.error("Failed to replace dark oak sapling grower", t);
+        }
     }
 
     public static void registerFlammables() {
