@@ -56,7 +56,7 @@ public class BayouBluesEvents {
     }
 
     /**
-     * 衰亡（BBB 移植）：带衰亡效果的生物受非魔法伤害时，被附加 5~N 秒剧毒
+     * 屈服（BBB 移植）：带屈服效果的生物受非魔法伤害时，被附加 5~N 秒剧毒
      * （100 + 25×等级 tick，隐藏粒子与图标）。对应 BBB 的 {@code onLivingEntityDamage}。
      */
     @SubscribeEvent

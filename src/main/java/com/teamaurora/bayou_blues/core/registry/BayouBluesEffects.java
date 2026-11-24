@@ -15,7 +15,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 /**
  * 状态效果与药水（移植自 Better Badlands 的 {@code BetterBadlandsEffects}）。
- * 衰亡/衰亡（延长）/衰亡 II 三档，用萨瓜罗花在酿造台从粗制的药水起酿。
+ * 屈服/屈服（延长）/屈服 II 三档，用萨瓜罗花在酿造台从粗制的药水起酿。
  */
 public class BayouBluesEffects {
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, BayouBlues.MOD_ID);

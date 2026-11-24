@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * 萨瓜罗仙人掌主体。移植自 Better Badlands 的 {@code SaguaroCactusBlock}（1.16.5）。
- * 触碰造成仙人掌伤害并附加 60 秒"衰亡"效果；只能长在沙子/萨瓜罗上，上方不能是液体。
+ * 触碰造成仙人掌伤害并附加 60 秒"屈服"效果；只能长在沙子/萨瓜罗上，上方不能是液体。
  */
 public class SaguaroCactusBlock extends Block implements IPlantable {
     public static final IntegerProperty AGE = BlockStateProperties.AGE_15;

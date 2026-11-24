@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * 萨瓜罗仙人掌的"小枝"（六向连接块，原版是 SixWayBlock，1.17+ 更名为 {@link PipeBlock}）。
- * 从主体侧向伸出，可连接沙子/主体/小花；触碰同样造成伤害与"衰亡"。
+ * 从主体侧向伸出，可连接沙子/主体/小花；触碰同样造成伤害与"屈服"。
  */
 public class SmallSaguaroCactusBlock extends PipeBlock implements IPlantable {
     protected static final VoxelShape COLLISION_SHAPE = Block.box(1.0D, 0.0D, 1.0D, 15.0D, 15.0D, 15.0D);
